@@ -1,6 +1,4 @@
-// Example: Simple fade-in effect on load
+// Smooth fade-in effect on page load
 window.addEventListener('load', () => {
     document.body.style.opacity = '1';
 });
-
-// You can add more scripts for interactivity
