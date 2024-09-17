@@ -7,35 +7,29 @@ body {
     opacity: 0;
     transition: opacity 0.5s ease;
 }
-
 header {
     background-color: #ff7f50;
     color: white;
     text-align: center;
     padding: 30px 20px;
 }
-
 header h1 {
     font-size: 3em;
     margin: 0;
 }
-
 header p {
     font-size: 1.2em;
     margin-top: 10px;
     font-style: italic;
 }
-
 h2 {
     text-align: center;
     margin: 40px 0 20px;
     color: #444;
 }
-
 section {
     padding: 20px;
 }
-
 .image-gallery {
     display: flex;
     flex-wrap: wrap;
@@ -43,19 +37,16 @@ section {
     gap: 20px;
     padding: 20px;
 }
-
 .gallery-item {
     max-width: 200px;
     border: 2px solid #ddd;
     border-radius: 8px;
     transition: transform 0.3s, box-shadow 0.3s;
 }
-
 .gallery-item:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
-
 .video-container {
     display: flex;
     flex-wrap: wrap;
@@ -63,12 +54,10 @@ section {
     gap: 20px;
     padding: 20px;
 }
-
 iframe {
     border: 2px solid #ddd;
     border-radius: 8px;
 }
-
 .video-message p {
     text-align: center;
     max-width: 800px;
@@ -83,7 +72,6 @@ iframe {
     line-height: 1.8;
     font-family: 'Georgia', serif;
 }
-
 .letter {
     max-width: 800px;
     margin: 0 auto;
@@ -95,17 +83,14 @@ iframe {
     line-height: 1.8;
     color: #333;
 }
-
 .letter p {
     margin-bottom: 20px;
 }
-
 .letter .signature {
     text-align: right;
     font-style: italic;
     margin-top: 30px;
 }
-
 footer {
     background-color: #ff7f50;
     color: white;
@@ -114,4 +99,35 @@ footer {
     position: relative;
     bottom: 0;
     width: 100%;
+}
+#countdown {
+    background-color: #fff7eb;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 800px;
+}
+#countdown h2 {
+    text-align: center;
+    color: #ff7f50;
+    margin-bottom: 20px;
+}
+#countdown-timer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.countdown-item {
+    text-align: center;
+    margin: 10px;
+}
+.countdown-item span {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+}
+.countdown-item p {
+    margin-top: 5px;
+    color: #666;
 }
