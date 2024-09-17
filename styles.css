@@ -46,4 +46,60 @@ section {
 
 .gallery-item {
     max-width: 200px;
-    border:
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+iframe {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+.video-container + p {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px 25px;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff7eb; /* Light warm background to make it stand out */
+    border-left: 5px solid #ff7f50; /* Matching the theme color */
+    font-size: 1.1em;
+    color: #555;
+    border-radius: 8px; /* Rounded corners for a softer look */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow to lift the text off the page */
+    line-height: 1.6; /* Improved line spacing for readability */
+}
+
+blockquote {
+    margin: 20px auto;
+    padding: 20px;
+    border-left: 5px solid #ff7f50;
+    font-style: italic;
+    max-width: 800px;
+    background-color: #f4f4f4;
+    color: #555;
+}
+
+footer {
+    background-color: #ff7f50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
