@@ -101,17 +101,19 @@ footer {
     width: 100%;
 }
 #countdown {
-    background-color: #FFC0CB; /* Pink background */
+    background-color: #FFC0CB; /* Light pink background */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin: 20px auto;
     max-width: 800px;
 }
 #countdown h2 {
     text-align: center;
-    color: #FFD700; /* Gold color for the title */
+    color: #FFD700; /* Brighter gold */
     margin-bottom: 20px;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 #countdown-timer {
     display: flex;
@@ -123,11 +125,14 @@ footer {
     margin: 10px;
 }
 .countdown-item span {
-    font-size: 2.5em;
+    font-size: 3.5em;
     font-weight: bold;
-    color: #FFD700; /* Gold color for the numbers */
+    color: #FFD700; /* Brighter gold */
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 .countdown-item p {
     margin-top: 5px;
-    color: #FFD700; /* Gold color for the labels */
+    color: #FFD700; /* Brighter gold */
+    font-size: 1.2em;
+    font-weight: bold;
 }
