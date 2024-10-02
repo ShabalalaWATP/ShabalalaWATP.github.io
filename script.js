@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
 
 // Countdown timer
 function updateCountdown() {
-    const returnDate = new Date("2025-01-06T00:00:00").getTime(); // Honor's return date: January 6th, 2025
+    const returnDate = new Date("2025-01-16T00:00:00").getTime(); // Honor's return date: January 16th, 2025
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
 
@@ -27,3 +27,40 @@ function updateCountdown() {
 
 const countdownTimer = setInterval(updateCountdown, 1000);
 updateCountdown(); // Initial call to avoid delay
+
+// Update clocks
+function updateClocks() {
+    const now = new Date();
+
+    // UK Time
+    const ukOptions = {
+        timeZone: 'Europe/London',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute:'2-digit',
+        second:'2-digit',
+        hour12: false
+    };
+    const ukTime = new Intl.DateTimeFormat('en-GB', ukOptions).format(now);
+
+    // Australia Time (Sydney)
+    const auOptions = {
+        timeZone: 'Australia/Sydney',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute:'2-digit',
+        second:'2-digit',
+        hour12: false
+    };
+    const auTime = new Intl.DateTimeFormat('en-AU', auOptions).format(now);
+
+    document.getElementById('uk-time').textContent = ukTime;
+    document.getElementById('australia-time').textContent = auTime;
+}
+
+setInterval(updateClocks, 1000);
+updateClocks(); // Initial call
