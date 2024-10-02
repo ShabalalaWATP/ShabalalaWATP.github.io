@@ -136,3 +136,37 @@ footer {
     font-size: 1.2em;
     font-weight: bold;
 }
+
+/* Styles for the clocks */
+#clocks {
+    background-color: #f0f8ff; /* AliceBlue background */
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+#clocks h2 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+.clock-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.clock-item {
+    text-align: center;
+    margin: 10px;
+}
+.clock-item h3 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 10px;
+}
+.clock-item p {
+    font-size: 1.2em;
+    color: #333;
+}
