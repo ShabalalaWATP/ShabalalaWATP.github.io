@@ -94,7 +94,7 @@ function calculateTime() {
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
-        hour12: true
+        hour12: false // This sets the time to 24-hour format
     };
 
     const ukTimeString = ukDate.toLocaleString('en-GB', formatOptions);
