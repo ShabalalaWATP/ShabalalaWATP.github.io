@@ -24,9 +24,9 @@
     <section id="videos">
         <h2>Videos</h2>
         <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/VWiTrV5iRYs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/6R_LUJ8LU4E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/t7bQwwqW-Hc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/A9dPtRFSfjg?si=yHF9w-GMxtonvFZX" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/qLVKPL9FwNQ?si=OoEDMZ_G7r7tcfga" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/lofgud4wLLo?si=PVOi3ceDTdE4iCzC" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="video-message">
             <p>To make you feel close to home even when you're far away, I'll be adding a new video every single week just for you. Whether it's a funny moment, a sweet message, or a surprise that will make you smile, these videos are my way of reminding you that you're always in my thoughts, no matter where you are.</p>
@@ -51,7 +51,6 @@
         </div>
     </section>
 
-    <!-- Clocks Section -->
     <div id="clocks">
         <h2>Current Date and Time</h2>
         <div class="clock-container">
@@ -66,7 +65,25 @@
         </div>
     </div>
 
-    <!-- Countdown Timer -->
+    <div id="time-zone-calculator">
+        <h2>Time Zone Calculator</h2>
+        <div class="calculator-container">
+            <div class="calculator-input">
+                <h3>Enter Date and Time</h3>
+                <select id="country-select">
+                    <option value="uk">United Kingdom</option>
+                    <option value="au">Australia (Sydney)</option>
+                </select>
+                <input type="datetime-local" id="datetime-input">
+                <button onclick="calculateTime()">Calculate</button>
+            </div>
+            <div class="calculator-output">
+                <h3>Result</h3>
+                <div id="calculation-result"></div>
+            </div>
+        </div>
+    </div>
+
     <div id="countdown">
         <h2>Countdown until Honor's Return</h2>
         <div id="countdown-timer">
@@ -88,6 +105,7 @@
             </div>
         </div>
     </div>
+
     <footer>
         <p>Made with love by Alex ❤️</p>
     </footer>
