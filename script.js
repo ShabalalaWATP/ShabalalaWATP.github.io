@@ -3,9 +3,9 @@ window.addEventListener('load', () => {
     document.body.style.opacity = '1';
 });
 
-// Countdown timer
+// Countdown timer function
 function updateCountdown() {
-    const returnDate = new Date("2025-01-16T00:00:00").getTime(); // Honor's return date: January 16th, 2025
+    const returnDate = new Date("2025-01-16T00:00:00").getTime();
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
 
@@ -28,7 +28,7 @@ function updateCountdown() {
 const countdownTimer = setInterval(updateCountdown, 1000);
 updateCountdown(); // Initial call to avoid delay
 
-// Update clocks
+// Update clocks function
 function updateClocks() {
     const now = new Date();
 
@@ -39,8 +39,8 @@ function updateClocks() {
         month: 'long',
         day: 'numeric',
         hour: '2-digit',
-        minute:'2-digit',
-        second:'2-digit',
+        minute: '2-digit',
+        second: '2-digit',
         hour12: false
     };
     const ukTime = new Intl.DateTimeFormat('en-GB', ukOptions).format(now);
@@ -52,8 +52,8 @@ function updateClocks() {
         month: 'long',
         day: 'numeric',
         hour: '2-digit',
-        minute:'2-digit',
-        second:'2-digit',
+        minute: '2-digit',
+        second: '2-digit',
         hour12: false
     };
     const auTime = new Intl.DateTimeFormat('en-AU', auOptions).format(now);
@@ -64,3 +64,56 @@ function updateClocks() {
 
 setInterval(updateClocks, 1000);
 updateClocks(); // Initial call
+
+// Time Zone Calculator function
+function calculateTime() {
+    const countrySelect = document.getElementById('country-select');
+    const datetimeInput = document.getElementById('datetime-input');
+    const resultElement = document.getElementById('calculation-result');
+
+    if (!datetimeInput.value) {
+        resultElement.innerHTML = "<p class='error'>Please enter a date and time.</p>";
+        return;
+    }
+
+    const inputDate = new Date(datetimeInput.value);
+    let ukDate, auDate;
+
+    if (countrySelect.value === 'uk') {
+        ukDate = new Date(inputDate);
+        auDate = new Date(inputDate.getTime() + (10 * 60 * 60 * 1000)); // Add 10 hours
+    } else {
+        auDate = new Date(inputDate);
+        ukDate = new Date(inputDate.getTime() - (10 * 60 * 60 * 1000)); // Subtract 10 hours
+    }
+
+    const formatOptions = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    };
+
+    const ukTimeString = ukDate.toLocaleString('en-GB', formatOptions);
+    const auTimeString = auDate.toLocaleString('en-AU', formatOptions);
+
+    resultElement.innerHTML = `
+        <div class="result-box">
+            <p><strong>United Kingdom:</strong><br>${ukTimeString}</p>
+        </div>
+        <div class="result-box">
+            <p><strong>Sydney, Australia:</strong><br>${auTimeString}</p>
+        </div>
+    `;
+}
+
+// Event listener for the calculate button
+document.addEventListener('DOMContentLoaded', (event) => {
+    const calculateButton = document.querySelector('#time-zone-calculator button');
+    if (calculateButton) {
+        calculateButton.addEventListener('click', calculateTime);
+    }
+});
