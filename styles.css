@@ -1,0 +1,290 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9fc;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+header {
+    background-color: #ff7f50;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+header h1 {
+    font-size: 3em;
+    margin: 0;
+}
+
+header p {
+    font-size: 1.2em;
+    margin-top: 10px;
+    font-style: italic;
+}
+
+h2 {
+    text-align: center;
+    margin: 40px 0 20px;
+    color: #444;
+}
+
+/* MP3 Button Styles */
+.button-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.button-container button {
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.2em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-container button img.audio-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.button-container button:hover {
+    background-color: #ff6347;
+}
+
+.button-container .button-text {
+    vertical-align: middle;
+}
+
+/* Gallery (Pictures) Styles */
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.gallery-item {
+    max-width: 200px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Video Container Styles */
+.video-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+iframe {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Message Box under YouTube Videos */
+.video-message {
+    text-align: center;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px 30px;
+    background-color: #fff7eb;
+    border-left: 5px solid #ff7f50;
+    font-size: 1.2em;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    line-height: 1.8;
+    font-family: 'Georgia', serif;
+}
+
+/* Letter Section Styles */
+.letter {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Georgia', serif;
+    line-height: 1.8;
+    color: #333;
+}
+
+.letter p {
+    margin-bottom: 20px;
+}
+
+.letter .signature {
+    text-align: right;
+    font-style: italic;
+    margin-top: 30px;
+}
+
+/* Clock Section Styles */
+#clocks, #time-zone-calculator, #countdown {
+    background-color: #f0f8ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#clocks h2, #time-zone-calculator h2, #countdown h2 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.clock-container, .calculator-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.clock-item, .calculator-input, .calculator-output {
+    text-align: center;
+    margin: 10px;
+    flex-basis: 45%;
+}
+
+.clock-item h3, .calculator-input h3, .calculator-output h3 {
+    font-size: 1.5em;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.clock-item p {
+    font-size: 1.2em;
+    color: #333;
+}
+
+#timezone-select, #datetime-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#time-zone-calculator button {
+    background-color: #ff7f50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+#time-zone-calculator button:hover {
+    background-color: #ff6347;
+}
+
+/* Countdown Styles */
+#countdown {
+    background-color: #FFC0CB;
+}
+
+#countdown h2 {
+    color: #FFD700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+#countdown-timer {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    text-align: center;
+    margin: 10px;
+}
+
+.countdown-item span {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #FFD700;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.countdown-item p {
+    margin-top: 5px;
+    color: #FFD700;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* Time Zone Calculator Result Styles */
+#calculation-result {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.result-box {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 10px;
+    width: calc(50% - 20px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.result-box p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.result-box strong {
+    color: #ff7f50;
+}
+
+.error {
+    color: #ff0000;
+    font-weight: bold;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #ff7f50;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Styles for smaller screens */
+@media (max-width: 768px) {
+    .calculator-input, .calculator-output, .result-box {
+        flex-basis: 100%;
+        width: 100%;
+    }
+}
