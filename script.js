@@ -1,3 +1,8 @@
+// Smooth fade-in effect on page load
+window.addEventListener('load', () => {
+    document.body.style.opacity = '1';
+});
+
 // Function to play or pause the selected audio file
 function playAudio(audioFile, button) {
     var audioPlayer = document.getElementById('audio-player');
@@ -53,18 +58,29 @@ function updateCountdown() {
     const timeLeft = returnDate - now;
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const hours = Math.floor(
+        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    document.getElementById("days").textContent = days.toString().padStart(2, '0');
-    document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
-    document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
-    document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+    document.getElementById("days").textContent = days
+        .toString()
+        .padStart(2, "0");
+    document.getElementById("hours").textContent = hours
+        .toString()
+        .padStart(2, "0");
+    document.getElementById("minutes").textContent = minutes
+        .toString()
+        .padStart(2, "0");
+    document.getElementById("seconds").textContent = seconds
+        .toString()
+        .padStart(2, "0");
 
     if (timeLeft < 0) {
         clearInterval(countdownTimer);
-        document.getElementById("countdown").innerHTML = "<h2>Honor has returned!</h2>";
+        document.getElementById("countdown").innerHTML =
+            "<h2>Honor has returned!</h2>";
     }
 }
 
@@ -99,36 +115,56 @@ function updateClocks() {
 setInterval(updateClocks, 1000);
 updateClocks(); // Initial call
 
-// Time Zone Calculator Function
+// Time Zone Calculator function using Luxon
 function calculateTime() {
-    const selectedTimezone = document.getElementById("timezone-select").value;
-    const datetimeInput = document.getElementById("datetime-input").value;
+    const timezoneSelect = document.getElementById("timezone-select");
+    const datetimeInput = document.getElementById("datetime-input");
+    const resultElement = document.getElementById("calculation-result");
 
-    if (!datetimeInput) {
-        document.getElementById("calculation-result").innerHTML = "<p class='error'>Please select a date and time.</p>";
+    if (!datetimeInput.value) {
+        resultElement.innerHTML =
+            "<p class='error'>Please enter a date and time.</p>";
         return;
     }
 
-    // Parse the input date and time
-    const inputDateTime = luxon.DateTime.fromISO(datetimeInput, { zone: selectedTimezone });
+    const inputTimeZone = timezoneSelect.value;
+    const inputDateTimeString = datetimeInput.value;
 
-    // Define the timezones you want to display
-    const timezones = [
-        { label: "United Kingdom", zone: "Europe/London" },
-        { label: "Australia (Sydney)", zone: "Australia/Sydney" },
-        { label: "Australia (Brisbane)", zone: "Australia/Brisbane" }
+    // Parse the input date and time as being in the selected time zone
+    const inputDateTime = luxon.DateTime.fromISO(inputDateTimeString, {
+        zone: inputTimeZone,
+    });
+
+    // Time zones to display
+    const timeZones = [
+        { name: "United Kingdom", timeZone: "Europe/London" },
+        { name: "Australia (Sydney)", timeZone: "Australia/Sydney" },
+        { name: "Australia (Brisbane)", timeZone: "Australia/Brisbane" },
     ];
 
-    // Generate the results
     let resultHTML = "";
-    timezones.forEach(function(tz) {
-        const convertedTime = inputDateTime.setZone(tz.zone).toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
+
+    timeZones.forEach(function (tz) {
+        const tzDateTime = inputDateTime.setZone(tz.timeZone);
+        const formattedDateTime = tzDateTime.toFormat(
+            "EEEE, d LLLL yyyy, HH:mm"
+        );
         resultHTML += `
             <div class="result-box">
-                <p><strong>${tz.label}:</strong> ${convertedTime}</p>
+                <p><strong>${tz.name}:</strong><br>${formattedDateTime}</p>
             </div>
         `;
     });
 
-    document.getElementById("calculation-result").innerHTML = resultHTML;
+    resultElement.innerHTML = resultHTML;
 }
+
+// Event listener for the calculate button
+document.addEventListener("DOMContentLoaded", (event) => {
+    const calculateButton = document.querySelector(
+        "#time-zone-calculator button"
+    );
+    if (calculateButton) {
+        calculateButton.addEventListener("click", calculateTime);
+    }
+});
