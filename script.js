@@ -1,7 +1,50 @@
-// Smooth fade-in effect on page load
-window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
-});
+// Function to play or pause the selected audio file
+function playAudio(audioFile, button) {
+    var audioPlayer = document.getElementById('audio-player');
+    var audioSource = document.getElementById('audio-source');
+
+    // Get the full URL of the audioFile
+    var audioFileUrl = new URL(audioFile, window.location.href).href;
+
+    // Get the image and text elements inside the button
+    var img = button.querySelector('img');
+    var textSpan = button.querySelector('.button-text');
+
+    // Check if the same song is already loaded
+    if (audioSource.src === audioFileUrl) {
+        if (audioPlayer.paused) {
+            // Resume playback if paused
+            audioPlayer.play();
+            // Update the button to show the pause icon and text
+            img.src = 'images/pause-icon.png';
+            textSpan.textContent = textSpan.textContent.replace('Play', 'Pause');
+        } else {
+            // Pause playback if playing
+            audioPlayer.pause();
+            // Update the button to show the play icon and text
+            img.src = 'images/audio-icon.png';
+            textSpan.textContent = textSpan.textContent.replace('Pause', 'Play');
+        }
+    } else {
+        // Load and play the new audio file
+        audioSource.src = audioFile;
+        audioPlayer.load();
+        audioPlayer.play();
+
+        // Reset all buttons to show play icon and text
+        var buttons = document.querySelectorAll('#audio-buttons button');
+        buttons.forEach(function(btn) {
+            var btnImg = btn.querySelector('img');
+            var btnTextSpan = btn.querySelector('.button-text');
+            btnImg.src = 'images/audio-icon.png';
+            btnTextSpan.textContent = btnTextSpan.textContent.replace('Pause', 'Play');
+        });
+
+        // Update this button to show pause icon and text
+        img.src = 'images/pause-icon.png';
+        textSpan.textContent = textSpan.textContent.replace('Play', 'Pause');
+    }
+}
 
 // Countdown timer function
 function updateCountdown() {
@@ -26,94 +69,66 @@ function updateCountdown() {
 }
 
 const countdownTimer = setInterval(updateCountdown, 1000);
-updateCountdown(); // Initial call to avoid delay
+updateCountdown(); // Initial call
 
-// Update clocks function
+// Update clocks function using Luxon
 function updateClocks() {
-    const now = new Date();
+    // Current time
+    const now = luxon.DateTime.now();
 
     // UK Time
-    const ukOptions = {
-        timeZone: 'Europe/London',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    };
-    const ukTime = new Intl.DateTimeFormat('en-GB', ukOptions).format(now);
+    const ukTime = now
+        .setZone("Europe/London")
+        .toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
 
     // Australia Time (Sydney)
-    const auOptions = {
-        timeZone: 'Australia/Sydney',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    };
-    const auTime = new Intl.DateTimeFormat('en-AU', auOptions).format(now);
+    const sydneyTime = now
+        .setZone("Australia/Sydney")
+        .toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
 
-    document.getElementById('uk-time').textContent = ukTime;
-    document.getElementById('australia-time').textContent = auTime;
+    // Australia Time (Brisbane)
+    const brisbaneTime = now
+        .setZone("Australia/Brisbane")
+        .toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
+
+    document.getElementById("uk-time").textContent = ukTime;
+    document.getElementById("sydney-time").textContent = sydneyTime;
+    document.getElementById("brisbane-time").textContent = brisbaneTime;
 }
 
 setInterval(updateClocks, 1000);
 updateClocks(); // Initial call
 
-// Time Zone Calculator function
+// Time Zone Calculator Function
 function calculateTime() {
-    const countrySelect = document.getElementById('country-select');
-    const datetimeInput = document.getElementById('datetime-input');
-    const resultElement = document.getElementById('calculation-result');
+    const selectedTimezone = document.getElementById("timezone-select").value;
+    const datetimeInput = document.getElementById("datetime-input").value;
 
-    if (!datetimeInput.value) {
-        resultElement.innerHTML = "<p class='error'>Please enter a date and time.</p>";
+    if (!datetimeInput) {
+        document.getElementById("calculation-result").innerHTML = "<p class='error'>Please select a date and time.</p>";
         return;
     }
 
-    const inputDate = new Date(datetimeInput.value);
-    let ukDate, auDate;
+    // Parse the input date and time
+    const inputDateTime = luxon.DateTime.fromISO(datetimeInput, { zone: selectedTimezone });
 
-    if (countrySelect.value === 'uk') {
-        ukDate = new Date(inputDate);
-        auDate = new Date(inputDate.getTime() + (10 * 60 * 60 * 1000)); // Add 10 hours
-    } else {
-        auDate = new Date(inputDate);
-        ukDate = new Date(inputDate.getTime() - (10 * 60 * 60 * 1000)); // Subtract 10 hours
-    }
+    // Define the timezones you want to display
+    const timezones = [
+        { label: "United Kingdom", zone: "Europe/London" },
+        { label: "Australia (Sydney)", zone: "Australia/Sydney" },
+        { label: "Australia (Brisbane)", zone: "Australia/Brisbane" }
+    ];
 
-    const formatOptions = {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false // This sets the time to 24-hour format
-    };
+    // Generate the results
+    let resultHTML = "";
+    timezones.forEach(function(tz) {
+        const convertedTime = inputDateTime.setZone(tz.zone).toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
+        resultHTML += `
+            <div class="result-box">
+                <p><strong>${tz.label}:</strong> ${convertedTime}</p>
+            </div>
+        `;
+    });
 
-    const ukTimeString = ukDate.toLocaleString('en-GB', formatOptions);
-    const auTimeString = auDate.toLocaleString('en-AU', formatOptions);
-
-    resultElement.innerHTML = `
-        <div class="result-box">
-            <p><strong>United Kingdom:</strong><br>${ukTimeString}</p>
-        </div>
-        <div class="result-box">
-            <p><strong>Sydney, Australia:</strong><br>${auTimeString}</p>
-        </div>
-    `;
+    document.getElementById("calculation-result").innerHTML = resultHTML;
 }
-
-// Event listener for the calculate button
-document.addEventListener('DOMContentLoaded', (event) => {
-    const calculateButton = document.querySelector('#time-zone-calculator button');
-    if (calculateButton) {
-        calculateButton.addEventListener('click', calculateTime);
-    }
-});
