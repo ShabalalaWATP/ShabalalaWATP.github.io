@@ -1,7 +1,28 @@
 /* Global Styles */
+@keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #f9f9fc;
+    background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
     color: #333;
     margin: 0;
     padding: 0;
@@ -9,282 +30,239 @@ body {
     transition: opacity 0.5s ease;
 }
 
+/* Header Styles */
 header {
-    background-color: #ff7f50;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
     color: white;
     text-align: center;
     padding: 30px 20px;
+    position: relative;
+    overflow: hidden;
 }
 
 header h1 {
     font-size: 3em;
     margin: 0;
+    background: linear-gradient(to right, #ff7f50, #ff6347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header p {
     font-size: 1.2em;
     margin-top: 10px;
     font-style: italic;
+    color: #333;
 }
 
 h2 {
     text-align: center;
     margin: 40px 0 20px;
     color: #444;
+    font-size: 2.5em;
+    background: linear-gradient(to right, #ff7f50, #ff6347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-/* MP3 Button Styles */
-.button-container {
-    text-align: center;
-    margin-bottom: 20px;
+/* Glass Card Effect */
+.glass-card {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(209, 213, 219, 0.3);
+    padding: 20px;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
-.button-container button {
-    background-color: #ff7f50;
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Audio Button Styles */
+.audio-button {
+    background: linear-gradient(135deg, #ff7f50, #ff6347);
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding: 16px 32px;
     font-size: 1.2em;
-    border-radius: 5px;
+    border-radius: 12px;
     cursor: pointer;
     margin: 10px;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 127, 80, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
 }
 
-.button-container button img.audio-icon {
+.audio-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 127, 80, 0.3);
+}
+
+.audio-button img {
     width: 24px;
     height: 24px;
-    margin-right: 10px;
 }
 
-.button-container button:hover {
-    background-color: #ff6347;
-}
-
-.button-container .button-text {
-    vertical-align: middle;
-}
-
-/* Gallery (Pictures) Styles */
-.image-gallery {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-}
-
+/* Gallery Styles */
 .gallery-item {
-    max-width: 200px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 300px;
+    width: 100%;
 }
 
 .gallery-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
 /* Video Container Styles */
 .video-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
     padding: 20px;
 }
 
 iframe {
-    border: 2px solid #ddd;
-    border-radius: 8px;
-}
-
-/* Message Box under YouTube Videos */
-.video-message {
-    text-align: center;
-    max-width: 800px;
-    margin: 30px auto;
-    padding: 20px 30px;
-    background-color: #fff7eb;
-    border-left: 5px solid #ff7f50;
-    font-size: 1.2em;
-    color: #333;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    line-height: 1.8;
-    font-family: 'Georgia', serif;
-}
-
-/* Letter Section Styles */
-.letter {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: #fff;
-    border-radius: 15px;
+    border-radius: 16px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    font-family: 'Georgia', serif;
-    line-height: 1.8;
-    color: #333;
-}
-
-.letter p {
-    margin-bottom: 20px;
-}
-
-.letter .signature {
-    text-align: right;
-    font-style: italic;
-    margin-top: 30px;
-}
-
-/* Clock Section Styles */
-#clocks, #time-zone-calculator, #countdown {
-    background-color: #f0f8ff;
-    padding: 20px;
-    border-radius: 10px;
-    margin: 20px auto;
-    max-width: 800px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-#clocks h2, #time-zone-calculator h2, #countdown h2 {
-    text-align: center;
-    color: #444;
-    margin-bottom: 20px;
-    font-size: 2em;
-}
-
-.clock-container, .calculator-container {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.clock-item, .calculator-input, .calculator-output {
-    text-align: center;
-    margin: 10px;
-    flex-basis: 45%;
-}
-
-.clock-item h3, .calculator-input h3, .calculator-output h3 {
-    font-size: 1.5em;
-    color: #444;
-    margin-bottom: 10px;
-}
-
-.clock-item p {
-    font-size: 1.2em;
-    color: #333;
-}
-
-#timezone-select, #datetime-input {
+    transition: transform 0.3s ease;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    aspect-ratio: 16/9;
 }
 
-#time-zone-calculator button {
-    background-color: #ff7f50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
+iframe:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
-#time-zone-calculator button:hover {
-    background-color: #ff6347;
+/* Message Box Styles */
+.video-message, .letter {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 30px;
+    margin: 30px auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    line-height: 1.8;
+    max-width: 800px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    transition: transform 0.3s ease;
 }
 
-/* Countdown Styles */
-#countdown {
-    background-color: #FFC0CB;
+.video-message:hover, .letter:hover {
+    transform: translateY(-5px) rotateX(2deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-#countdown h2 {
-    color: #FFD700;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+/* Time Zones & Countdown Styles */
+.clock-container, .countdown-timer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-#countdown-timer {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.countdown-item {
+.clock-item, .countdown-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 20px;
     text-align: center;
-    margin: 10px;
+    animation: float 6s ease-in-out infinite;
 }
 
 .countdown-item span {
     font-size: 3.5em;
     font-weight: bold;
-    color: #FFD700;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    background: linear-gradient(to right, #ff7f50, #ff6347);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .countdown-item p {
-    margin-top: 5px;
-    color: #FFD700;
     font-size: 1.2em;
-    font-weight: bold;
+    color: #444;
+    margin-top: 10px;
 }
 
-/* Time Zone Calculator Result Styles */
-#calculation-result {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-}
-
-.result-box {
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px;
-    width: calc(50% - 20px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.result-box p {
-    margin: 0;
-    line-height: 1.5;
-}
-
-.result-box strong {
-    color: #ff7f50;
-}
-
-.error {
-    color: #ff0000;
-    font-weight: bold;
-}
+/* Animation Delays for Countdown Items */
+.countdown-item:nth-child(2) { animation-delay: 1.5s; }
+.countdown-item:nth-child(3) { animation-delay: 3s; }
+.countdown-item:nth-child(4) { animation-delay: 4.5s; }
 
 /* Footer Styles */
 footer {
-    background-color: #ff7f50;
+    background: rgba(255, 127, 80, 0.9);
+    backdrop-filter: blur(10px);
     color: white;
     text-align: center;
-    padding: 10px;
-    position: relative;
-    bottom: 0;
-    width: 100%;
+    padding: 20px;
+    margin-top: 40px;
 }
 
-/* Responsive Styles for smaller screens */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .calculator-input, .calculator-output, .result-box {
-        flex-basis: 100%;
-        width: 100%;
+    header h1 {
+        font-size: 2em;
     }
+
+    .glass-card {
+        margin: 10px;
+        padding: 15px;
+    }
+
+    .countdown-item span {
+        font-size: 2.5em;
+    }
+
+    .video-container {
+        grid-template-columns: 1fr;
+    }
+
+    .clock-container, .countdown-timer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .clock-container, .countdown-timer {
+        grid-template-columns: 1fr;
+    }
+
+    .audio-button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #ff7f50, #ff6347);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #ff6347, #ff4500);
 }
