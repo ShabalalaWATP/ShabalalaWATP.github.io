@@ -3,149 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#ff7f50">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Honor's Webpage</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Include Luxon JS library -->
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
-</head>
-<body>
-    <header>
-        <h1>Honor's Webpage</h1>
-        <p>If ever you are feeling down, you can visit this website to cheer yourself up. Remember, every part of this page is filled with love, just for you. Love, Alex</p>
-    </header>
     
-    <!-- MP3 Audio Buttons Section -->
-    <section id="audio-buttons">
-        <h2>Music for Honor</h2>
-        <div class="button-container">
-            <button onclick="playAudio('audio/Honor 1.mp3', this)">
-                <img src="images/audio-icon.png" alt="Play" class="audio-icon">
-                <span class="button-text">Play Hip-Hop Song</span>
-            </button>
-            <button onclick="playAudio('audio/Honor 3.mp3', this)">
-                <img src="images/audio-icon.png" alt="Play" class="audio-icon">
-                <span class="button-text">Play Pop-Rock Song</span>
-            </button>
+    <!-- Include Tailwind CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <!-- Include Luxon JS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
+    <!-- Include Three.js for 3D effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .glass-card {
+            backdrop-filter: blur(16px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.75);
+            border-radius: 12px;
+            border: 1px solid rgba(209, 213, 219, 0.3);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .audio-button {
+            background: linear-gradient(135deg, #ff7f50, #ff6347);
+            border-radius: 12px;
+            padding: 16px 32px;
+            box-shadow: 0 4px 15px rgba(255, 127, 80, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .audio-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 127, 80, 0.3);
+        }
+
+        .gallery-item {
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .countdown-item {
+            animation: float 6s ease-in-out infinite;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .countdown-item:nth-child(2) { animation-delay: 1.5s; }
+        .countdown-item:nth-child(3) { animation-delay: 3s; }
+        .countdown-item:nth-child(4) { animation-delay: 4.5s; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-pink-100 via-white to-purple-100 opacity-70"></div>
+        <div class="relative z-10 text-center px-4">
+            <div class="glass-card p-8 max-w-3xl mx-auto">
+                <h1 class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500 mb-6">
+                    Honor's Webpage
+                </h1>
+                <p class="text-xl text-gray-700 mb-8 leading-relaxed">
+                    If ever you are feeling down, you can visit this website to cheer yourself up. 
+                    Remember, every part of this page is filled with love, just for you. Love, Alex
+                </p>
+            </div>
         </div>
-        
-        <!-- Hidden audio tag to handle playback -->
-        <audio id="audio-player" controls style="display:none;">
-            <source id="audio-source" src="" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
+        <!-- Animated background blobs -->
+        <div class="absolute -bottom-32 -left-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute -bottom-32 -right-40 w-80 h-80 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-32 left-20 w-80 h-80 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+    </header>
+
+    <!-- Audio Section -->
+    <section id="audio-buttons" class="py-16 px-4">
+        <div class="glass-card max-w-4xl mx-auto p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                Music for Honor
+            </h2>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <button onclick="playAudio('audio/Honor 1.mp3', this)" class="audio-button">
+                    <img src="images/audio-icon.png" alt="Play" class="w-6 h-6">
+                    <span>Play Hip-Hop Song</span>
+                </button>
+                <button onclick="playAudio('audio/Honor 3.mp3', this)" class="audio-button">
+                    <img src="images/audio-icon.png" alt="Play" class="w-6 h-6">
+                    <span>Play Pop-Rock Song</span>
+                </button>
+            </div>
+            <audio id="audio-player" controls style="display:none;">
+                <source id="audio-source" src="" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+        </div>
     </section>
 
-    <!-- Pictures Section -->
-    <section id="gallery">
-        <h2>Pictures</h2>
-        <div class="image-gallery">
-            <img src="images/hcow.png" alt="Image 1" class="gallery-item">
-            <img src="images/I Love You.jpg" alt="Image 2" class="gallery-item">
-            <img src="images/IMG_1736.PNG" alt="Image 3" class="gallery-item">
-            <img src="images/IMG_1737.PNG" alt="Image 4" class="gallery-item">
-            <img src="images/IMG_1738.PNG" alt="Image 5" class="gallery-item">
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 px-4">
+        <div class="glass-card max-w-6xl mx-auto p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                Pictures
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <img src="images/hcow.png" alt="Image 1" class="gallery-item">
+                <img src="images/I Love You.jpg" alt="Image 2" class="gallery-item">
+                <img src="images/IMG_1736.PNG" alt="Image 3" class="gallery-item">
+                <img src="images/IMG_1737.PNG" alt="Image 4" class="gallery-item">
+                <img src="images/IMG_1738.PNG" alt="Image 5" class="gallery-item">
+            </div>
         </div>
     </section>
-
     <!-- Videos Section -->
-    <section id="videos">
-        <h2>Videos</h2>
-        <div class="video-container">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/7ZX4H4WJT-Y?si=yY65TAk6vaZZ2DI5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/PvZDY_PDw68?si=Xb3P27EfuaWXKgiJ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/CUQ984A_XyA?si=e76CFJVcSW5dMgOv" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="video-message">
-            <p>To make you feel close to home even when you're far away, I'll be adding a new video every single week just for you. Whether it's a funny moment, a sweet message, or a surprise that will make you smile, these videos are my way of reminding you that you're always in my thoughts, no matter where you are.</p>
+    <section id="videos" class="py-16 px-4">
+        <div class="glass-card max-w-6xl mx-auto p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                Videos
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe src="https://www.youtube.com/embed/7ZX4H4WJT-Y?si=yY65TAk6vaZZ2DI5" 
+                            class="w-full h-full rounded-xl" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe src="https://www.youtube.com/embed/PvZDY_PDw68?si=Xb3P27EfuaWXKgiJ" 
+                            class="w-full h-full rounded-xl" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="aspect-w-16 aspect-h-9">
+                    <iframe src="https://www.youtube.com/embed/CUQ984A_XyA?si=e76CFJVcSW5dMgOv" 
+                            class="w-full h-full rounded-xl" 
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="mt-8 p-6 bg-white/30 backdrop-blur-sm rounded-xl">
+                <p class="text-lg text-gray-700">
+                    To make you feel close to home even when you're far away, I'll be adding a new video every single week just for you. 
+                    Whether it's a funny moment, a sweet message, or a surprise that will make you smile, 
+                    these videos are my way of reminding you that you're always in my thoughts, no matter where you are.
+                </p>
+            </div>
         </div>
     </section>
 
     <!-- Letter Section -->
-    <section id="letter">
-        <h2>A Letter</h2>
-        <div class="letter">
-            <p>Honor, sometimes I struggle to put into words how I'm truly feeling inside; sometimes I say things without thinking of how you will take it. But please know I love you with all my heart, and I'm thankful every day that I met you.</p>
-            <p>I know you're not always self-confident and struggle daily to be happy with who you are. You feel the way you do, not because you've done anything wrong but because of other people's actions. But I (and I think most other people) see you for who you truly are: a kind, intelligent, beautiful, sexy, caring, funny, selfless human being who never hesitates to put her friends and loved ones before herself, sometimes at the expense of herself and her health!</p>
-            <p>Life never really works out how we plan it to; we all have setbacks, things that knock us down, and we meet people we wish we had never met and we have experiences we wish never happened. Four months ago, I didn’t really know what I wanted to do in my life, but now I do. That's how life works, I suppose.</p>
-            <p>I know you are nervous about Australia; it would be weird if you weren’t, to be honest. But you're going to experience something most of us never get to; You're going to see some amazing “stuff and things,” and you’re going to make some amazing friends along the way. You are obviously nervous about the dangers over there, but you will be with a large group, you know every precaution to take, and both your friends and I will be checking up on you, and your location, every god damn hour of the day 😉</p>
-            <p>If, at times, you feel homesick, I'll always be at the other end of a phone or an e-mail inbox (alex.orr104@mod.gov.uk). Even during work time, you never need to feel scared to ask me something, and you never need to feel like you're pestering me; I want to hear every little thing that you get up to out there!</p>
-            <p>Now, you may be wondering why that is. Well, that brings me back to paragraph 3: “Four months ago, I didn’t really know what I wanted to do in my life, but now I do.” I want to spend the rest of my life with you; I want to one day get married, I want to one day have children with you, I want to live forevermore with you until we die together at 100 years old.</p>
-            <p>So even though we are as far away on this earth as physically possible from each other, I’ve never felt closer to someone in my life.</p>
-            <p>I’ll be waiting for you when you get back ready to have a hug,</p>
-            <p>I Love You 3033</p>
-            <div class="signature">
-                <p>Alex</p>
-                <p>xxxxx</p>
+    <section id="letter" class="py-16 px-4">
+        <div class="glass-card max-w-4xl mx-auto p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                A Letter
+            </h2>
+            <div class="prose prose-lg max-w-none text-gray-700">
+                <p>Honor, sometimes I struggle to put into words how I'm truly feeling inside; sometimes I say things without thinking of how you will take it. But please know I love you with all my heart, and I'm thankful every day that I met you.</p>
+                <p>I know you're not always self-confident and struggle daily to be happy with who you are. You feel the way you do, not because you've done anything wrong but because of other people's actions. But I (and I think most other people) see you for who you truly are: a kind, intelligent, beautiful, sexy, caring, funny, selfless human being who never hesitates to put her friends and loved ones before herself, sometimes at the expense of herself and her health!</p>
+                <p>Life never really works out how we plan it to; we all have setbacks, things that knock us down, and we meet people we wish we had never met and we have experiences we wish never happened. Four months ago, I didn't really know what I wanted to do in my life, but now I do. That's how life works, I suppose.</p>
+                <p>I know you are nervous about Australia; it would be weird if you weren't, to be honest. But you're going to experience something most of us never get to; You're going to see some amazing "stuff and things," and you're going to make some amazing friends along the way. You are obviously nervous about the dangers over there, but you will be with a large group, you know every precaution to take, and both your friends and I will be checking up on you, and your location, every god damn hour of the day 😉</p>
+                <p>If, at times, you feel homesick, I'll always be at the other end of a phone or an e-mail inbox (alex.orr104@mod.gov.uk). Even during work time, you never need to feel scared to ask me something, and you never need to feel like you're pestering me; I want to hear every little thing that you get up to out there!</p>
+                <p>Now, you may be wondering why that is. Well, that brings me back to paragraph 3: "Four months ago, I didn't really know what I wanted to do in my life, but now I do." I want to spend the rest of my life with you; I want to one day get married, I want to one day have children with you, I want to live forevermore with you until we die together at 100 years old.</p>
+                <p>So even though we are as far away on this earth as physically possible from each other, I've never felt closer to someone in my life.</p>
+                <p>I'll be waiting for you when you get back ready to have a hug,</p>
+                <p>I Love You 3033</p>
+                <div class="signature">
+                    <p>Alex</p>
+                    <p>xxxxx</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Clocks Section -->
-    <div id="clocks">
-        <h2>Current Date and Time</h2>
-        <div class="clock-container">
-            <div class="clock-item">
-                <h3>United Kingdom</h3>
-                <p id="uk-time">Loading...</p>
-            </div>
-            <div class="clock-item">
-                <h3>Australia (Sydney)</h3>
-                <p id="sydney-time">Loading...</p>
-            </div>
-            <div class="clock-item">
-                <h3>Australia (Brisbane)</h3>
-                <p id="brisbane-time">Loading...</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Time Zone Calculator Section -->
-    <div id="time-zone-calculator">
-        <h2>Time Zone Calculator</h2>
-        <div class="calculator-container">
-            <div class="calculator-input">
-                <h3>Enter Date and Time</h3>
-                <select id="timezone-select">
-                    <option value="Europe/London">United Kingdom</option>
-                    <option value="Australia/Sydney">Australia (Sydney)</option>
-                    <option value="Australia/Brisbane">Australia (Brisbane)</option>
-                </select>
-                <input type="datetime-local" id="datetime-input">
-                <button onclick="calculateTime()">Calculate</button>
-            </div>
-            <div class="calculator-output">
-                <h3>Result</h3>
-                <div id="calculation-result"></div>
+    <!-- Time Zones Section -->
+    <section class="py-16 px-4">
+        <div class="glass-card max-w-4xl mx-auto p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                Current Time
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-6 bg-white/30 backdrop-blur-sm rounded-xl text-center">
+                    <h3 class="text-xl font-semibold mb-4">United Kingdom</h3>
+                    <p id="uk-time" class="text-lg">Loading...</p>
+                </div>
+                <div class="p-6 bg-white/30 backdrop-blur-sm rounded-xl text-center">
+                    <h3 class="text-xl font-semibold mb-4">Australia (Sydney)</h3>
+                    <p id="sydney-time" class="text-lg">Loading...</p>
+                </div>
+                <div class="p-6 bg-white/30 backdrop-blur-sm rounded-xl text-center">
+                    <h3 class="text-xl font-semibold mb-4">Australia (Brisbane)</h3>
+                    <p id="brisbane-time" class="text-lg">Loading...</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Countdown Section -->
-    <div id="countdown">
-        <h2>Countdown until Honor's Return</h2>
-        <div id="countdown-timer">
-            <div class="countdown-item">
-                <span id="days">00</span>
-                <p>Days</p>
-            </div>
-            <div class="countdown-item">
-                <span id="hours">00</span>
-                <p>Hours</p>
-            </div>
-            <div class="countdown-item">
-                <span id="minutes">00</span>
-                <p>Minutes</p>
-            </div>
-            <div class="countdown-item">
-                <span id="seconds">00</span>
-                <p>Seconds</p>
+    <section id="countdown" class="py-16 px-4">
+        <div class="glass-card max-w-4xl mx-auto p-8">
+            <h2 class="text-4xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-violet-500">
+                Countdown until Honor's Return
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="countdown-item">
+                    <span id="days" class="text-4xl font-bold text-pink-500">00</span>
+                    <p class="text-lg mt-2">Days</p>
+                </div>
+                <div class="countdown-item">
+                    <span id="hours" class="text-4xl font-bold text-pink-500">00</span>
+                    <p class="text-lg mt-2">Hours</p>
+                </div>
+                <div class="countdown-item">
+                    <span id="minutes" class="text-4xl font-bold text-pink-500">00</span>
+                    <p class="text-lg mt-2">Minutes</p>
+                </div>
+                <div class="countdown-item">
+                    <span id="seconds" class="text-4xl font-bold text-pink-500">00</span>
+                    <p class="text-lg mt-2">Seconds</p>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <footer>
-        <p>Made with love by Alex ❤️</p>
+    <footer class="py-8 px-4 text-center text-white">
+        <p class="text-lg">Made with ❤️ by Alex</p>
     </footer>
+
+    <!-- Keep your existing script.js -->
     <script src="script.js"></script>
 </body>
 </html>
