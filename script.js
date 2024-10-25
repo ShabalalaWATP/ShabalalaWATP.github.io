@@ -1,170 +1,211 @@
 // Smooth fade-in effect on page load
-window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
+document.addEventListener('DOMContentLoaded', () => {
+    // Fade in body
+    setTimeout(() => {
+        document.body.style.opacity = '1';
+    }, 100);
+
+    // Add scroll reveal animations
+    const observerOptions = {
+        root: null,
+        threshold: 0.1,
+        rootMargin: "0px"
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all sections
+    document.querySelectorAll('section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(section);
+    });
 });
 
-// Function to play or pause the selected audio file
+// Enhanced audio player functionality
+let currentlyPlaying = null;
+
 function playAudio(audioFile, button) {
-    var audioPlayer = document.getElementById('audio-player');
-    var audioSource = document.getElementById('audio-source');
-
+    const audioPlayer = document.getElementById('audio-player');
+    const audioSource = document.getElementById('audio-source');
+    const allButtons = document.querySelectorAll('.audio-button');
+    
     // Get the full URL of the audioFile
-    var audioFileUrl = new URL(audioFile, window.location.href).href;
+    const audioFileUrl = new URL(audioFile, window.location.href).href;
+    
+    // Reset all buttons
+    allButtons.forEach(btn => {
+        btn.style.transform = 'scale(1)';
+        const btnImg = btn.querySelector('img');
+        const btnSpan = btn.querySelector('span');
+        btnImg.src = 'images/audio-icon.png';
+        btnSpan.textContent = btnSpan.textContent.replace('Pause', 'Play');
+    });
 
-    // Get the image and text elements inside the button
-    var img = button.querySelector('img');
-    var textSpan = button.querySelector('.button-text');
-
-    // Check if the same song is already loaded
-    if (audioSource.src === audioFileUrl) {
-        if (audioPlayer.paused) {
-            // Resume playback if paused
-            audioPlayer.play();
-            // Update the button to show the pause icon and text
-            img.src = 'images/pause-icon.png';
-            textSpan.textContent = textSpan.textContent.replace('Play', 'Pause');
-        } else {
-            // Pause playback if playing
-            audioPlayer.pause();
-            // Update the button to show the play icon and text
-            img.src = 'images/audio-icon.png';
-            textSpan.textContent = textSpan.textContent.replace('Pause', 'Play');
-        }
+    if (currentlyPlaying === audioFile && !audioPlayer.paused) {
+        // Pause current audio
+        audioPlayer.pause();
+        button.style.transform = 'scale(1)';
+        button.querySelector('img').src = 'images/audio-icon.png';
+        button.querySelector('span').textContent = button.querySelector('span').textContent.replace('Pause', 'Play');
+        currentlyPlaying = null;
     } else {
-        // Load and play the new audio file
-        audioSource.src = audioFile;
-        audioPlayer.load();
+        // Play new audio
+        if (audioSource.src !== audioFileUrl) {
+            audioSource.src = audioFile;
+            audioPlayer.load();
+        }
         audioPlayer.play();
-
-        // Reset all buttons to show play icon and text
-        var buttons = document.querySelectorAll('#audio-buttons button');
-        buttons.forEach(function(btn) {
-            var btnImg = btn.querySelector('img');
-            var btnTextSpan = btn.querySelector('.button-text');
-            btnImg.src = 'images/audio-icon.png';
-            btnTextSpan.textContent = btnTextSpan.textContent.replace('Pause', 'Play');
-        });
-
-        // Update this button to show pause icon and text
-        img.src = 'images/pause-icon.png';
-        textSpan.textContent = textSpan.textContent.replace('Play', 'Pause');
+        button.style.transform = 'scale(1.05)';
+        button.querySelector('img').src = 'images/pause-icon.png';
+        button.querySelector('span').textContent = button.querySelector('span').textContent.replace('Play', 'Pause');
+        currentlyPlaying = audioFile;
     }
 }
 
-// Countdown timer function
+// Enhanced countdown timer with smooth updates
 function updateCountdown() {
     const returnDate = new Date("2025-01-16T00:00:00").getTime();
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-    const hours = Math.floor(
-        (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    document.getElementById("days").textContent = days
-        .toString()
-        .padStart(2, "0");
-    document.getElementById("hours").textContent = hours
-        .toString()
-        .padStart(2, "0");
-    document.getElementById("minutes").textContent = minutes
-        .toString()
-        .padStart(2, "0");
-    document.getElementById("seconds").textContent = seconds
-        .toString()
-        .padStart(2, "0");
+    // Smooth number updates
+    updateNumberWithAnimation('days', days);
+    updateNumberWithAnimation('hours', hours);
+    updateNumberWithAnimation('minutes', minutes);
+    updateNumberWithAnimation('seconds', seconds);
 
     if (timeLeft < 0) {
         clearInterval(countdownTimer);
-        document.getElementById("countdown").innerHTML =
-            "<h2>Honor has returned!</h2>";
+        document.getElementById("countdown").innerHTML = "<h2>Honor has returned!</h2>";
     }
 }
 
-const countdownTimer = setInterval(updateCountdown, 1000);
-updateCountdown(); // Initial call
-
-// Update clocks function using Luxon
-function updateClocks() {
-    // Current time
-    const now = luxon.DateTime.now();
-
-    // UK Time
-    const ukTime = now
-        .setZone("Europe/London")
-        .toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
-
-    // Australia Time (Sydney)
-    const sydneyTime = now
-        .setZone("Australia/Sydney")
-        .toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
-
-    // Australia Time (Brisbane)
-    const brisbaneTime = now
-        .setZone("Australia/Brisbane")
-        .toFormat("EEEE, d LLLL yyyy, HH:mm:ss");
-
-    document.getElementById("uk-time").textContent = ukTime;
-    document.getElementById("sydney-time").textContent = sydneyTime;
-    document.getElementById("brisbane-time").textContent = brisbaneTime;
+// Smooth number animation helper
+function updateNumberWithAnimation(elementId, newValue) {
+    const element = document.getElementById(elementId);
+    const currentValue = parseInt(element.textContent);
+    
+    if (currentValue !== newValue) {
+        element.style.transform = 'scale(1.1)';
+        element.style.opacity = '0';
+        
+        setTimeout(() => {
+            element.textContent = String(newValue).padStart(2, '0');
+            element.style.transform = 'scale(1)';
+            element.style.opacity = '1';
+        }, 100);
+    }
 }
 
-setInterval(updateClocks, 1000);
-updateClocks(); // Initial call
+// Initialize countdown
+const countdownTimer = setInterval(updateCountdown, 1000);
+updateCountdown();
 
-// Time Zone Calculator function using Luxon
+// Enhanced clock updates with Luxon
+function updateClocks() {
+    const now = luxon.DateTime.now();
+    const zones = [
+        { id: 'uk-time', zone: 'Europe/London' },
+        { id: 'sydney-time', zone: 'Australia/Sydney' },
+        { id: 'brisbane-time', zone: 'Australia/Brisbane' }
+    ];
+
+    zones.forEach(({ id, zone }) => {
+        const element = document.getElementById(id);
+        const zoneTime = now.setZone(zone);
+        const formattedTime = zoneTime.toFormat('EEEE, d LLLL yyyy, HH:mm:ss');
+
+        if (element.textContent !== formattedTime) {
+            element.style.opacity = '0';
+            setTimeout(() => {
+                element.textContent = formattedTime;
+                element.style.opacity = '1';
+            }, 200);
+        }
+    });
+}
+
+// Initialize clocks with smooth transitions
+setInterval(updateClocks, 1000);
+updateClocks();
+
+// Time Zone Calculator with enhanced UI feedback
 function calculateTime() {
-    const timezoneSelect = document.getElementById("timezone-select");
-    const datetimeInput = document.getElementById("datetime-input");
-    const resultElement = document.getElementById("calculation-result");
+    const timezoneSelect = document.getElementById('timezone-select');
+    const datetimeInput = document.getElementById('datetime-input');
+    const resultElement = document.getElementById('calculation-result');
 
     if (!datetimeInput.value) {
-        resultElement.innerHTML =
-            "<p class='error'>Please enter a date and time.</p>";
+        showError(resultElement, 'Please enter a date and time.');
         return;
     }
 
-    const inputTimeZone = timezoneSelect.value;
-    const inputDateTimeString = datetimeInput.value;
+    try {
+        const inputDateTime = luxon.DateTime.fromISO(datetimeInput.value, {
+            zone: timezoneSelect.value
+        });
 
-    // Parse the input date and time as being in the selected time zone
-    const inputDateTime = luxon.DateTime.fromISO(inputDateTimeString, {
-        zone: inputTimeZone,
-    });
+        const timeZones = [
+            { name: 'United Kingdom', zone: 'Europe/London' },
+            { name: 'Australia (Sydney)', zone: 'Australia/Sydney' },
+            { name: 'Australia (Brisbane)', zone: 'Australia/Brisbane' }
+        ];
 
-    // Time zones to display
-    const timeZones = [
-        { name: "United Kingdom", timeZone: "Europe/London" },
-        { name: "Australia (Sydney)", timeZone: "Australia/Sydney" },
-        { name: "Australia (Brisbane)", timeZone: "Australia/Brisbane" },
-    ];
+        let resultHTML = '';
+        timeZones.forEach(tz => {
+            const convertedTime = inputDateTime.setZone(tz.zone);
+            resultHTML += `
+                <div class="result-box" style="opacity: 0; transform: translateY(20px);">
+                    <p><strong>${tz.name}:</strong><br>${convertedTime.toFormat('EEEE, d LLLL yyyy, HH:mm')}</p>
+                </div>
+            `;
+        });
 
-    let resultHTML = "";
+        resultElement.innerHTML = resultHTML;
 
-    timeZones.forEach(function (tz) {
-        const tzDateTime = inputDateTime.setZone(tz.timeZone);
-        const formattedDateTime = tzDateTime.toFormat(
-            "EEEE, d LLLL yyyy, HH:mm"
-        );
-        resultHTML += `
-            <div class="result-box">
-                <p><strong>${tz.name}:</strong><br>${formattedDateTime}</p>
-            </div>
-        `;
-    });
+        // Animate results in
+        document.querySelectorAll('.result-box').forEach((box, index) => {
+            setTimeout(() => {
+                box.style.transition = 'all 0.5s ease';
+                box.style.opacity = '1';
+                box.style.transform = 'translateY(0)';
+            }, index * 100);
+        });
 
-    resultElement.innerHTML = resultHTML;
+    } catch (error) {
+        showError(resultElement, 'Invalid date/time format. Please try again.');
+    }
 }
 
-// Event listener for the calculate button
-document.addEventListener("DOMContentLoaded", (event) => {
-    const calculateButton = document.querySelector(
-        "#time-zone-calculator button"
-    );
-    if (calculateButton) {
-        calculateButton.addEventListener("click", calculateTime);
-    }
+// Error handling helper
+function showError(element, message) {
+    element.innerHTML = `<p class="error" style="opacity: 0">${message}</p>`;
+    requestAnimationFrame(() => {
+        element.querySelector('.error').style.transition = 'opacity 0.3s ease';
+        element.querySelector('.error').style.opacity = '1';
+    });
+}
+
+// Add smooth parallax effect on mouse move
+document.addEventListener('mousemove', (e) => {
+    const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+
+    document.querySelectorAll('.glass-card').forEach(card => {
+        card.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
 });
