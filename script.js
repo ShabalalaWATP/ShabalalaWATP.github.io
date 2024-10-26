@@ -1,6 +1,17 @@
 // Smooth fade-in effect on page load
 window.addEventListener('load', () => {
-    document.body.style.opacity = '1';
+    // Remove 'not-loaded' class from flower-container to start flower fade-in
+    const flowerContainer = document.querySelector('.flower-container');
+    if (flowerContainer) {
+        setTimeout(() => {
+            flowerContainer.classList.remove('not-loaded');
+            flowerContainer.classList.add('loaded');
+        }, 1000); // Adjust the delay as needed
+    }
+
+    // Initialize other functionalities
+    updateCountdown();
+    updateClocks();
 });
 
 // Audio player functionality
@@ -67,7 +78,6 @@ function updateCountdown() {
 
 // Initialize countdown
 const countdownTimer = setInterval(updateCountdown, 1000);
-updateCountdown();
 
 // Time Zones Update
 function updateClocks() {
@@ -94,9 +104,8 @@ function updateClocks() {
 
 // Initialize clocks
 setInterval(updateClocks, 1000);
-updateClocks();
 
-// Fixed Time Zone Calculator
+// Time Zone Calculator
 function calculateTime() {
     const timezoneSelect = document.getElementById('timezone-select');
     const datetimeInput = document.getElementById('datetime-input');
