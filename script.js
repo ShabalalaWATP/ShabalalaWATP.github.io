@@ -196,3 +196,60 @@ document.getElementById('audio-player').addEventListener('error', (e) => {
     console.error('Error loading audio:', e);
     alert('Error loading audio file. Please try again.');
 });
+// Smooth Scrolling for Navigation Links
+document.querySelectorAll('.nav-menu a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetID = this.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetID);
+        if (targetSection) {
+            window.scrollTo({
+                top: targetSection.offsetTop - 60, // Adjust for fixed nav height
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Responsive Navigation Toggle (Hamburger Menu)
+const navMenu = document.querySelector('.nav-menu');
+const navLinks = document.querySelector('.nav-menu ul');
+const navToggle = document.querySelector('.nav-menu::before'); // Pseudo-element not directly accessible
+
+// Alternative approach: Use a separate button for toggle
+// Modify HTML to include a button for toggling
+// <nav class="nav-menu">
+//     <span class="menu-toggle">☰</span>
+//     <ul>
+//         ...
+//     </ul>
+// </nav>
+
+// Update CSS to hide the toggle span on larger screens
+
+// Implement the toggle functionality
+const menuToggle = document.createElement('span');
+menuToggle.classList.add('menu-toggle');
+menuToggle.innerHTML = '☰';
+navMenu.prepend(menuToggle);
+
+menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    navMenu.classList.toggle('active');
+    if (navMenu.classList.contains('active')) {
+        menuToggle.innerHTML = '✖';
+    } else {
+        menuToggle.innerHTML = '☰';
+    }
+});
+
+// Ensure the menu closes when a link is clicked (on mobile)
+document.querySelectorAll('.nav-menu a').forEach(anchor => {
+    anchor.addEventListener('click', function() {
+        if (navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            navMenu.classList.remove('active');
+            menuToggle.innerHTML = '☰';
+        }
+    });
+});
