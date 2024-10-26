@@ -170,6 +170,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+// Function to generate floating hearts
+function generateFloatingHearts() {
+    const floatingHeartsContainer = document.querySelector('.floating-hearts');
+    if (!floatingHeartsContainer) return;
+
+    const numberOfHearts = 20; // Adjust the number of hearts as desired
+
+    for (let i = 0; i < numberOfHearts; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('floating-heart');
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.animationDuration = `${Math.random() * 5 + 5}s`; // 5-10 seconds
+        heart.style.fontSize = `${Math.random() * 20 + 10}px`; // 10-30px
+        heart.textContent = '❤️';
+        floatingHeartsContainer.appendChild(heart);
+    }
+}
+
 // Error handling for audio loading
 document.getElementById('audio-player').addEventListener('error', (e) => {
     console.error('Error loading audio:', e);
