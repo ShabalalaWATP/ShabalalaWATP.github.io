@@ -1,4 +1,4 @@
-// Fade in effect on page load
+// Smooth fade-in effect on page load
 window.addEventListener('load', () => {
     document.body.style.opacity = '1';
 });
@@ -10,8 +10,11 @@ function playAudio(audioFile, button) {
     const audioPlayer = document.getElementById('audio-player');
     const audioSource = document.getElementById('audio-source');
     
+    // Get the full URL of the audioFile
+    const audioFileUrl = new URL(audioFile, window.location.href).href;
+    
     // Get all audio buttons
-    const allButtons = document.querySelectorAll('.audio-button');
+    const allButtons = document.querySelectorAll('.button-container button');
     
     // If the same song is playing
     if (currentlyPlaying === audioFile && !audioPlayer.paused) {
@@ -28,7 +31,7 @@ function playAudio(audioFile, button) {
         });
 
         // Load and play new audio
-        if (audioSource.src !== audioFile) {
+        if (audioSource.src !== audioFileUrl) {
             audioSource.src = audioFile;
             audioPlayer.load();
         }
@@ -136,52 +139,63 @@ function updateClocks() {
 setInterval(updateClocks, 1000);
 updateClocks();
 
-// Smooth scroll for any anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
-        
-        if (targetElement) {
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        }
-    });
-});
+// Time Zone Calculator
+function calculateTime() {
+    const timezoneSelect = document.getElementById('timezone-select');
+    const datetimeInput = document.getElementById('datetime-input');
+    const resultElement = document.getElementById('calculation-result');
+
+    if (!datetimeInput.value) {
+        resultElement.innerHTML = '<p class="error">Please enter a date and time.</p>';
+        return;
+    }
+
+    try {
+        const DateTime = luxon.DateTime;
+        const inputZone = timezoneSelect.value;
+        const inputDateTime = DateTime.fromISO(datetimeInput.value, { zone: inputZone });
+
+        const timeZones = [
+            { name: 'United Kingdom', zone: 'Europe/London' },
+            { name: 'Australia (Sydney)', zone: 'Australia/Sydney' },
+            { name: 'Australia (Brisbane)', zone: 'Australia/Brisbane' }
+        ];
+
+        let resultHTML = '<div class="calculation-results">';
+        timeZones.forEach(tz => {
+            const convertedTime = inputDateTime.setZone(tz.zone);
+            resultHTML += `
+                <div class="result-item">
+                    <strong>${tz.name}:</strong><br>
+                    ${convertedTime.toFormat('EEEE, d LLLL yyyy')}<br>
+                    ${convertedTime.toFormat('HH:mm:ss')}
+                </div>
+            `;
+        });
+        resultHTML += '</div>';
+
+        // Animate the result update
+        resultElement.style.opacity = '0';
+        setTimeout(() => {
+            resultElement.innerHTML = resultHTML;
+            resultElement.style.opacity = '1';
+        }, 200);
+
+    } catch (error) {
+        console.error('Error calculating time:', error);
+        resultElement.innerHTML = '<p class="error">Error calculating time. Please try again.</p>';
+    }
+}
 
 // Image loading animation
 document.querySelectorAll('.gallery-item').forEach(img => {
     img.addEventListener('load', function() {
         this.style.opacity = '1';
     });
-    
-    // Set initial opacity
     img.style.opacity = '0';
     img.style.transition = 'opacity 0.5s ease';
 });
 
-// Add intersection observer for scroll animations
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-view');
-            observer.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.1
-});
-
-// Observe all glass-cards
-document.querySelectorAll('.glass-card').forEach(card => {
-    observer.observe(card);
-});
-
-// Error handling for audio loading
-document.getElementById('audio-player').addEventListener('error', function(e) {
-    console.error('Error loading audio:', e);
-    alert('Sorry, there was an error loading the audio file. Please try again.');
-});
+// Initialize time zone calculator listeners
+document.getElementById('timezone-select')?.addEventListener('change', calculateTime);
+document.getElementById('datetime-input')?.addEventListener('change', calculateTime);
