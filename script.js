@@ -12,10 +12,10 @@ window.addEventListener('load', () => {
     // Initialize other functionalities
     updateCountdown();
     updateClocks();
-});
+
     // Generate floating hearts
     generateFloatingHearts();
-});
+}); // Removed the extra closing brace here
 
 // Audio player functionality
 let currentlyPlaying = null;
