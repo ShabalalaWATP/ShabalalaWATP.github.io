@@ -4,221 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Honor's Webpage</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
-    
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-            background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-
-        @keyframes gradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #333;
-            text-align: center;
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        p {
-            line-height: 1.6;
-        }
-
-        .button-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .audio-button {
-            background: linear-gradient(135deg, #ff7f50, #ff6347);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 10px;
-            cursor: pointer;
-            margin: 10px;
-            font-size: 16px;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
-        }
-
-        .gallery-item {
-            width: 100%;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.05);
-        }
-
-        .section-title {
-            color: #333;
-            text-align: center;
-            font-size: 2em;
-            margin: 20px 0;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
-        }
-
-        iframe {
-            width: 100%;
-            height: 315px;
-            border-radius: 10px;
-            border: none;
-        }
-
-        .time-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-
-        .countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            text-align: center;
-        }
-
-        .countdown-item span {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #ff6347;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Include Luxon JS library -->
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3/build/global/luxon.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header class="glass-card">
-            <h1>Honor's Webpage</h1>
-            <p style="text-align: center;">
-                If ever you are feeling down, you can visit this website to cheer yourself up. 
-                Remember, every part of this page is filled with love, just for you. Love, Alex
-            </p>
-        </header>
+    <header>
+        <h1>Honor's Webpage</h1>
+        <p>If ever you are feeling down, you can visit this website to cheer yourself up. Remember, every part of this page is filled with love, just for you. Love, Alex</p>
+    </header>
+    
+    <!-- MP3 Audio Buttons Section -->
+    <section id="audio-buttons">
+        <h2>Music for Honor</h2>
+        <div class="button-container">
+            <button onclick="playAudio('audio/Honor 1.mp3', this)">
+                <img src="images/audio-icon.png" alt="Play" class="audio-icon">
+                <span class="button-text">Play Hip-Hop Song</span>
+            </button>
+            <button onclick="playAudio('audio/Honor 3.mp3', this)">
+                <img src="images/audio-icon.png" alt="Play" class="audio-icon">
+                <span class="button-text">Play Pop-Rock Song</span>
+            </button>
+        </div>
+        
+        <!-- Hidden audio tag to handle playback -->
+        <audio id="audio-player" controls style="display:none;">
+            <source id="audio-source" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </section>
 
-        <section class="glass-card">
-            <h2 class="section-title">Music for Honor</h2>
-            <div class="button-container">
-                <button onclick="playAudio('audio/Honor 1.mp3', this)" class="audio-button">
-                    Play Hip-Hop Song
-                </button>
-                <button onclick="playAudio('audio/Honor 3.mp3', this)" class="audio-button">
-                    Play Pop-Rock Song
-                </button>
-            </div>
-            <audio id="audio-player" style="display:none;">
-                <source id="audio-source" src="" type="audio/mpeg">
-            </audio>
-        </section>
+    <!-- Pictures Section -->
+    <section id="gallery">
+        <h2>Pictures</h2>
+        <div class="image-gallery">
+            <img src="images/hcow.png" alt="Image 1" class="gallery-item">
+            <img src="images/I Love You.jpg" alt="Image 2" class="gallery-item">
+            <img src="images/IMG_1736.PNG" alt="Image 3" class="gallery-item">
+            <img src="images/IMG_1737.PNG" alt="Image 4" class="gallery-item">
+            <img src="images/IMG_1738.PNG" alt="Image 5" class="gallery-item">
+        </div>
+    </section>
 
-        <section class="glass-card">
-            <h2 class="section-title">Pictures</h2>
-            <div class="gallery-grid">
-                <img src="images/hcow.png" alt="Image 1" class="gallery-item">
-                <img src="images/I Love You.jpg" alt="Image 2" class="gallery-item">
-                <img src="images/IMG_1736.PNG" alt="Image 3" class="gallery-item">
-                <img src="images/IMG_1737.PNG" alt="Image 4" class="gallery-item">
-                <img src="images/IMG_1738.PNG" alt="Image 5" class="gallery-item">
-            </div>
-        </section>
+    <!-- Videos Section -->
+    <section id="videos">
+        <h2>Videos</h2>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/7ZX4H4WJT-Y?si=yY65TAk6vaZZ2DI5" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/PvZDY_PDw68?si=Xb3P27EfuaWXKgiJ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/CUQ984A_XyA?si=e76CFJVcSW5dMgOv" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-message">
+            <p>To make you feel close to home even when you're far away, I'll be adding a new video every single week just for you. Whether it's a funny moment, a sweet message, or a surprise that will make you smile, these videos are my way of reminding you that you're always in my thoughts, no matter where you are.</p>
+        </div>
+    </section>
 
-        <section class="glass-card">
-            <h2 class="section-title">Videos</h2>
-            <div class="video-grid">
-                <iframe src="https://www.youtube.com/embed/7ZX4H4WJT-Y?si=yY65TAk6vaZZ2DI5" allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/PvZDY_PDw68?si=Xb3P27EfuaWXKgiJ" allowfullscreen></iframe>
-                <iframe src="https://www.youtube.com/embed/CUQ984A_XyA?si=e76CFJVcSW5dMgOv" allowfullscreen></iframe>
+    <!-- Letter Section -->
+    <section id="letter">
+        <h2>A Letter</h2>
+        <div class="letter">
+            <p>Honor, sometimes I struggle to put into words how I'm truly feeling inside; sometimes I say things without thinking of how you will take it. But please know I love you with all my heart, and I'm thankful every day that I met you.</p>
+            <p>I know you're not always self-confident and struggle daily to be happy with who you are. You feel the way you do, not because you've done anything wrong but because of other people's actions. But I (and I think most other people) see you for who you truly are: a kind, intelligent, beautiful, sexy, caring, funny, selfless human being who never hesitates to put her friends and loved ones before herself, sometimes at the expense of herself and her health!</p>
+            <p>Life never really works out how we plan it to; we all have setbacks, things that knock us down, and we meet people we wish we had never met and we have experiences we wish never happened. Four months ago, I didn't really know what I wanted to do in my life, but now I do. That's how life works, I suppose.</p>
+            <p>I know you are nervous about Australia; it would be weird if you weren't, to be honest. But you're going to experience something most of us never get to; You're going to see some amazing "stuff and things," and you're going to make some amazing friends along the way. You are obviously nervous about the dangers over there, but you will be with a large group, you know every precaution to take, and both your friends and I will be checking up on you, and your location, every god damn hour of the day 😉</p>
+            <p>If, at times, you feel homesick, I'll always be at the other end of a phone or an e-mail inbox (alex.orr104@mod.gov.uk). Even during work time, you never need to feel scared to ask me something, and you never need to feel like you're pestering me; I want to hear every little thing that you get up to out there!</p>
+            <p>Now, you may be wondering why that is. Well, that brings me back to paragraph 3: "Four months ago, I didn't really know what I wanted to do in my life, but now I do." I want to spend the rest of my life with you; I want to one day get married, I want to one day have children with you, I want to live forevermore with you until we die together at 100 years old.</p>
+            <p>So even though we are as far away on this earth as physically possible from each other, I've never felt closer to someone in my life.</p>
+            <p>I'll be waiting for you when you get back ready to have a hug,</p>
+            <p>I Love You 3033</p>
+            <div class="signature">
+                <p>Alex</p>
+                <p>xxxxx</p>
             </div>
-        </section>
+        </div>
+    </section>
+    <!-- Clocks Section -->
+    <div id="clocks">
+        <h2>Current Date and Time</h2>
+        <div class="clock-container">
+            <div class="clock-item">
+                <h3>United Kingdom</h3>
+                <p id="uk-time">Loading...</p>
+            </div>
+            <div class="clock-item">
+                <h3>Australia (Sydney)</h3>
+                <p id="sydney-time">Loading...</p>
+            </div>
+            <div class="clock-item">
+                <h3>Australia (Brisbane)</h3>
+                <p id="brisbane-time">Loading...</p>
+            </div>
+        </div>
+    </div>
 
-        <section class="glass-card">
-            <h2 class="section-title">Current Time</h2>
-            <div class="time-grid">
-                <div>
-                    <h3>United Kingdom</h3>
-                    <p id="uk-time">Loading...</p>
-                </div>
-                <div>
-                    <h3>Australia (Sydney)</h3>
-                    <p id="sydney-time">Loading...</p>
-                </div>
-                <div>
-                    <h3>Australia (Brisbane)</h3>
-                    <p id="brisbane-time">Loading...</p>
-                </div>
+    <!-- Time Zone Calculator Section -->
+    <div id="time-zone-calculator">
+        <h2>Time Zone Calculator</h2>
+        <div class="calculator-container">
+            <div class="calculator-input">
+                <h3>Enter Date and Time</h3>
+                <select id="timezone-select">
+                    <option value="Europe/London">United Kingdom</option>
+                    <option value="Australia/Sydney">Australia (Sydney)</option>
+                    <option value="Australia/Brisbane">Australia (Brisbane)</option>
+                </select>
+                <input type="datetime-local" id="datetime-input">
+                <button onclick="calculateTime()">Calculate</button>
             </div>
-        </section>
+            <div class="calculator-output">
+                <h3>Result</h3>
+                <div id="calculation-result"></div>
+            </div>
+        </div>
+    </div>
 
-        <section class="glass-card">
-            <h2 class="section-title">Countdown until Honor's Return</h2>
-            <div class="countdown-grid">
-                <div class="countdown-item">
-                    <span id="days">00</span>
-                    <p>Days</p>
-                </div>
-                <div class="countdown-item">
-                    <span id="hours">00</span>
-                    <p>Hours</p>
-                </div>
-                <div class="countdown-item">
-                    <span id="minutes">00</span>
-                    <p>Minutes</p>
-                </div>
-                <div class="countdown-item">
-                    <span id="seconds">00</span>
-                    <p>Seconds</p>
-                </div>
+    <!-- Countdown Section -->
+    <div id="countdown">
+        <h2>Countdown until Honor's Return</h2>
+        <div id="countdown-timer">
+            <div class="countdown-item">
+                <span id="days">00</span>
+                <p>Days</p>
             </div>
-        </section>
+            <div class="countdown-item">
+                <span id="hours">00</span>
+                <p>Hours</p>
+            </div>
+            <div class="countdown-item">
+                <span id="minutes">00</span>
+                <p>Minutes</p>
+            </div>
+            <div class="countdown-item">
+                <span id="seconds">00</span>
+                <p>Seconds</p>
+            </div>
+        </div>
     </div>
 
     <footer>
-        <p>Made with ❤️ by Alex</p>
+        <p>Made with love by Alex ❤️</p>
     </footer>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
