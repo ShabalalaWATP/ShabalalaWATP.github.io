@@ -44,13 +44,13 @@ function playAudio(audioFile, button) {
 
 // Countdown Timer
 function updateCountdown() {
-    const returnDate = new Date("2025-01-16T00:00:00").getTime();
+    const returnDate = new Date("2025-01-02T00:00:00").getTime();
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
 
     if (timeLeft < 0) {
         clearInterval(countdownTimer);
-        document.getElementById("countdown").innerHTML = "<h2>Honor has returned!</h2>";
+        document.getElementById("countdown").innerHTML = "<h2 style='color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);'>Honor has returned!</h2>";
         return;
     }
 
