@@ -100,6 +100,35 @@ h2 {
     margin-bottom: 25px;
 }
 
+/* Floating Hearts Animation */
+.floating-hearts {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: float-up 10s linear infinite;
+    opacity: 0.7;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
 /* Audio Section */
 .button-container {
     text-align: center;
