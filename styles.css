@@ -1,4 +1,41 @@
-/* Global Styles */
+
+Includes responsive design
+Has clean animations
+Provides good spacing and typography
+Uses a consistent color scheme
+Includes hover effects
+Has proper media queries for mobile devices
+Includes loading states
+The main differences from the previous version are:
+
+Simplified structure
+Removed potentially conflicting styles
+Better organization
+More straightforward implementation
+Fixed the overflow issues
+Improved mobile responsiveness
+Would you like me to make any adjustments to specific sections?
+
+Copy
+Retry
+
+
+Claude can make mistakes. Please double-check responses.
+
+
+
+No file chosen
+
+
+3.5 Sonnet (New)
+1
+Tip:
+Long chats cause you to reach your usage limits faster.
+Start a new chat 
+
+Updated styles.css
+
+/* Main Animations */
 @keyframes gradient {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -7,23 +44,19 @@
 
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
+    50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+/* Base Styles */
 body {
     margin: 0;
-    padding: 0;
+    padding: 20px;
     min-height: 100vh;
     background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
     color: #333;
     line-height: 1.6;
 }
@@ -31,8 +64,6 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
-    animation: fadeIn 1s ease-out;
 }
 
 /* Glass Card Effect */
@@ -43,7 +74,7 @@ body {
     padding: 20px;
     margin-bottom: 30px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .glass-card:hover {
@@ -55,20 +86,34 @@ body {
 header.glass-card {
     text-align: center;
     padding: 40px 20px;
-    margin-top: 20px;
 }
 
 header h1 {
-    background: linear-gradient(to right, #ff7f50, #ff6347);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    margin-bottom: 15px;
     font-size: 2.5em;
-    font-weight: bold;
+    margin: 0 0 20px 0;
+    color: #ff4757;
+}
+
+header p {
+    font-size: 1.2em;
+    margin: 0;
+    color: #333;
+}
+
+/* Section Titles */
+.section-title, h2 {
+    color: #ff4757;
+    text-align: center;
+    font-size: 2em;
+    margin: 0 0 20px 0;
 }
 
 /* Audio Button Styles */
+.button-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
 .audio-button {
     background: linear-gradient(135deg, #ff7f50, #ff6347);
     color: white;
@@ -76,38 +121,37 @@ header h1 {
     padding: 15px 30px;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    margin: 10px;
+    font-size: 16px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    margin: 10px;
-    font-size: 1em;
-    font-weight: 500;
-    box-shadow: 0 4px 15px rgba(255, 127, 80, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .audio-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 127, 80, 0.3);
+    box-shadow: 0 5px 15px rgba(255, 127, 80, 0.3);
 }
 
 .audio-button img {
     width: 24px;
     height: 24px;
-    transition: transform 0.3s ease;
-}
-
-.audio-button:hover img {
-    transform: scale(1.1);
 }
 
 /* Gallery Styles */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
 .gallery-item {
-    border-radius: 10px;
-    transition: all 0.3s ease;
     width: 100%;
     height: auto;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gallery-item:hover {
@@ -116,57 +160,70 @@ header h1 {
 }
 
 /* Video Section Styles */
-.aspect-w-16 {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-    overflow: hidden;
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
 }
 
-.aspect-w-16 iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+iframe {
     width: 100%;
-    height: 100%;
+    height: 315px;
     border-radius: 10px;
+    border: none;
     transition: transform 0.3s ease;
 }
 
-.aspect-w-16:hover iframe {
+iframe:hover {
     transform: scale(1.02);
 }
 
-/* Time Zones Section Styles */
-.time-zone-card {
-    background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    border-radius: 10px;
+/* Time Zones Section */
+.time-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
     text-align: center;
-    transition: all 0.3s ease;
 }
 
-.time-zone-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.7);
+.time-grid h3 {
+    color: #ff4757;
+    margin-bottom: 10px;
 }
 
-/* Countdown Styles */
+.time-grid p {
+    font-size: 1.1em;
+}
+
+/* Countdown Section */
+.countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
 .countdown-item {
+    animation: float 6s ease-in-out infinite;
     background: rgba(255, 255, 255, 0.5);
     padding: 20px;
     border-radius: 10px;
-    text-align: center;
-    animation: float 6s ease-in-out infinite;
 }
 
 .countdown-item span {
     font-size: 2.5em;
     font-weight: bold;
-    color: #ff6347;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    color: #ff4757;
+    display: block;
 }
 
+.countdown-item p {
+    margin: 10px 0 0 0;
+    color: #333;
+}
+
+/* Animation Delays for Countdown Items */
 .countdown-item:nth-child(1) { animation-delay: 0s; }
 .countdown-item:nth-child(2) { animation-delay: 1.5s; }
 .countdown-item:nth-child(3) { animation-delay: 3s; }
@@ -176,38 +233,13 @@ header h1 {
 footer {
     text-align: center;
     padding: 20px;
-    margin-top: 40px;
     color: white;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
 }
 
 footer p {
     font-size: 1.1em;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-
-    header h1 {
-        font-size: 2em;
-    }
-
-    .audio-button {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .countdown-item span {
-        font-size: 2em;
-    }
-
-    .glass-card {
-        padding: 15px;
-        margin-bottom: 20px;
-    }
+    margin: 0;
 }
 
 /* Custom Scrollbar */
@@ -228,7 +260,36 @@ footer p {
     background: linear-gradient(to bottom, #ff6347, #ff4500);
 }
 
-/* Loading Animation */
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    header h1 {
+        font-size: 2em;
+    }
+
+    .section-title, h2 {
+        font-size: 1.8em;
+    }
+
+    .countdown-item span {
+        font-size: 2em;
+    }
+
+    .glass-card {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .audio-button {
+        width: calc(100% - 20px);
+        justify-content: center;
+    }
+}
+
+/* Loading State */
 .loading {
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -236,12 +297,4 @@ footer p {
 
 .loaded {
     opacity: 1;
-}
-
-/* Text Gradient Effect */
-.gradient-text {
-    background: linear-gradient(to right, #ff7f50, #ff6347);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
 }
