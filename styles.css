@@ -79,27 +79,11 @@
     }
 }
 
-    /* Add a hamburger menu icon */
-    .nav-menu::before {
-        content: '☰';
-        position: absolute;
-        top: 15px;
-        left: 20px;
-        font-size: 24px;
-        cursor: pointer;
-        display: none;
-    }
-
-    .nav-menu.active::before {
-        content: '✖';
-    }
-
-    @media (max-width: 768px) {
-        .nav-menu::before {
-            display: block;
-        }
-    }
+/* Add top padding to body content to account for fixed nav */
+body {
+    padding-top: 60px; /* Adjust based on nav-menu height */
 }
+
 /* Base styles */
 body {
     margin: 0;
