@@ -376,8 +376,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    min-height: 60vh; /* Adjust as needed */
-    margin-top: 20px; /* Add this line */
+    min-height: 50vh; /* Adjust as needed */
+    margin-top: 10px; /* Add this line */
 }
 
 /* Hide the night background */
