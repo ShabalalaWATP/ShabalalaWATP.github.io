@@ -13,6 +13,9 @@ window.addEventListener('load', () => {
     updateCountdown();
     updateClocks();
 });
+    // Generate floating hearts
+    generateFloatingHearts();
+});
 
 // Audio player functionality
 let currentlyPlaying = null;
