@@ -1,13 +1,11 @@
 // Smooth fade-in effect on page load
 document.addEventListener('DOMContentLoaded', () => {
-    // Fade in body
     setTimeout(() => {
         document.body.style.opacity = '1';
     }, 100);
 
     // Add scroll reveal animations
     const observerOptions = {
-        root: null,
         threshold: 0.1,
         rootMargin: "0px"
     };
@@ -21,8 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Observe all sections
-    document.querySelectorAll('section').forEach(section => {
+    // Observe all glass-card sections
+    document.querySelectorAll('.glass-card').forEach(section => {
         section.style.opacity = '0';
         section.style.transform = 'translateY(20px)';
         section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
@@ -30,16 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Enhanced audio player functionality
+// Audio player functionality
 let currentlyPlaying = null;
 
 function playAudio(audioFile, button) {
     const audioPlayer = document.getElementById('audio-player');
     const audioSource = document.getElementById('audio-source');
     const allButtons = document.querySelectorAll('.audio-button');
-    
-    // Get the full URL of the audioFile
-    const audioFileUrl = new URL(audioFile, window.location.href).href;
     
     // Reset all buttons
     allButtons.forEach(btn => {
@@ -59,23 +54,34 @@ function playAudio(audioFile, button) {
         currentlyPlaying = null;
     } else {
         // Play new audio
-        if (audioSource.src !== audioFileUrl) {
+        if (audioSource.src !== audioFile) {
             audioSource.src = audioFile;
             audioPlayer.load();
         }
-        audioPlayer.play();
-        button.style.transform = 'scale(1.05)';
-        button.querySelector('img').src = 'images/pause-icon.png';
-        button.querySelector('span').textContent = button.querySelector('span').textContent.replace('Play', 'Pause');
-        currentlyPlaying = audioFile;
+        audioPlayer.play()
+            .then(() => {
+                button.style.transform = 'scale(1.05)';
+                button.querySelector('img').src = 'images/pause-icon.png';
+                button.querySelector('span').textContent = button.querySelector('span').textContent.replace('Play', 'Pause');
+                currentlyPlaying = audioFile;
+            })
+            .catch(error => {
+                console.error('Error playing audio:', error);
+                // Handle error - maybe show a message to the user
+            });
     }
 }
 
-// Enhanced countdown timer with smooth updates
+// Countdown timer
 function updateCountdown() {
     const returnDate = new Date("2025-01-16T00:00:00").getTime();
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
+
+    if (timeLeft < 0) {
+        document.getElementById("countdown").innerHTML = "<h2 class='text-3xl font-bold text-center'>Honor has returned!</h2>";
+        return;
+    }
 
     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -87,14 +93,8 @@ function updateCountdown() {
     updateNumberWithAnimation('hours', hours);
     updateNumberWithAnimation('minutes', minutes);
     updateNumberWithAnimation('seconds', seconds);
-
-    if (timeLeft < 0) {
-        clearInterval(countdownTimer);
-        document.getElementById("countdown").innerHTML = "<h2>Honor has returned!</h2>";
-    }
 }
 
-// Smooth number animation helper
 function updateNumberWithAnimation(elementId, newValue) {
     const element = document.getElementById(elementId);
     const currentValue = parseInt(element.textContent);
@@ -115,97 +115,79 @@ function updateNumberWithAnimation(elementId, newValue) {
 const countdownTimer = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Enhanced clock updates with Luxon
+// Time zones update
 function updateClocks() {
-    const now = luxon.DateTime.now();
+    const DateTime = luxon.DateTime;
     const zones = [
-        { id: 'uk-time', zone: 'Europe/London' },
-        { id: 'sydney-time', zone: 'Australia/Sydney' },
-        { id: 'brisbane-time', zone: 'Australia/Brisbane' }
+        { elementId: 'uk-time', zone: 'Europe/London' },
+        { elementId: 'sydney-time', zone: 'Australia/Sydney' },
+        { elementId: 'brisbane-time', zone: 'Australia/Brisbane' }
     ];
 
-    zones.forEach(({ id, zone }) => {
-        const element = document.getElementById(id);
-        const zoneTime = now.setZone(zone);
-        const formattedTime = zoneTime.toFormat('EEEE, d LLLL yyyy, HH:mm:ss');
+    zones.forEach(({ elementId, zone }) => {
+        const now = DateTime.now().setZone(zone);
+        const element = document.getElementById(elementId);
+        const newTime = now.toFormat('EEEE, d LLLL yyyy\nHH:mm:ss');
 
-        if (element.textContent !== formattedTime) {
+        if (element.textContent !== newTime) {
             element.style.opacity = '0';
             setTimeout(() => {
-                element.textContent = formattedTime;
+                element.textContent = newTime;
                 element.style.opacity = '1';
             }, 200);
         }
     });
 }
 
-// Initialize clocks with smooth transitions
+// Initialize clocks
 setInterval(updateClocks, 1000);
 updateClocks();
 
-// Time Zone Calculator with enhanced UI feedback
-function calculateTime() {
-    const timezoneSelect = document.getElementById('timezone-select');
-    const datetimeInput = document.getElementById('datetime-input');
-    const resultElement = document.getElementById('calculation-result');
-
-    if (!datetimeInput.value) {
-        showError(resultElement, 'Please enter a date and time.');
-        return;
-    }
-
-    try {
-        const inputDateTime = luxon.DateTime.fromISO(datetimeInput.value, {
-            zone: timezoneSelect.value
-        });
-
-        const timeZones = [
-            { name: 'United Kingdom', zone: 'Europe/London' },
-            { name: 'Australia (Sydney)', zone: 'Australia/Sydney' },
-            { name: 'Australia (Brisbane)', zone: 'Australia/Brisbane' }
-        ];
-
-        let resultHTML = '';
-        timeZones.forEach(tz => {
-            const convertedTime = inputDateTime.setZone(tz.zone);
-            resultHTML += `
-                <div class="result-box" style="opacity: 0; transform: translateY(20px);">
-                    <p><strong>${tz.name}:</strong><br>${convertedTime.toFormat('EEEE, d LLLL yyyy, HH:mm')}</p>
-                </div>
-            `;
-        });
-
-        resultElement.innerHTML = resultHTML;
-
-        // Animate results in
-        document.querySelectorAll('.result-box').forEach((box, index) => {
-            setTimeout(() => {
-                box.style.transition = 'all 0.5s ease';
-                box.style.opacity = '1';
-                box.style.transform = 'translateY(0)';
-            }, index * 100);
-        });
-
-    } catch (error) {
-        showError(resultElement, 'Invalid date/time format. Please try again.');
-    }
-}
-
-// Error handling helper
-function showError(element, message) {
-    element.innerHTML = `<p class="error" style="opacity: 0">${message}</p>`;
-    requestAnimationFrame(() => {
-        element.querySelector('.error').style.transition = 'opacity 0.3s ease';
-        element.querySelector('.error').style.opacity = '1';
-    });
-}
-
-// Add smooth parallax effect on mouse move
+// Parallax effect on mouse movement
 document.addEventListener('mousemove', (e) => {
-    const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
-    const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
+    const cards = document.querySelectorAll('.glass-card');
+    const mouseX = e.clientX / window.innerWidth - 0.5;
+    const mouseY = e.clientY / window.innerHeight - 0.5;
 
-    document.querySelectorAll('.glass-card').forEach(card => {
-        card.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const cardCenterX = rect.left + rect.width / 2;
+        const cardCenterY = rect.top + rect.height / 2;
+        
+        const offsetX = (e.clientX - cardCenterX) * 0.01;
+        const offsetY = (e.clientY - cardCenterY) * 0.01;
+
+        card.style.transform = `perspective(1000px) 
+                              rotateY(${offsetX}deg) 
+                              rotateX(${-offsetY}deg) 
+                              translateZ(10px)`;
+    });
+});
+
+// Reset card transforms when mouse leaves
+document.addEventListener('mouseleave', () => {
+    const cards = document.querySelectorAll('.glass-card');
+    cards.forEach(card => {
+        card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) translateZ(0px)';
+    });
+});
+
+// Add loading animation to images
+document.querySelectorAll('.gallery-item').forEach(img => {
+    img.addEventListener('load', () => {
+        img.classList.add('loaded');
+    });
+});
+
+// Smooth scroll to sections
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const section = document.querySelector(this.getAttribute('href'));
+        if (section) {
+            section.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
     });
 });
