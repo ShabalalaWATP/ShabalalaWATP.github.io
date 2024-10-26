@@ -3,10 +3,14 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: transparent; /* Changed from rgba(255, 255, 255, 0.9) */
+    box-shadow: none; /* Optional: Remove shadow for a cleaner look */
     z-index: 1000;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, opacity 0.3s ease;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .nav-menu ul {
