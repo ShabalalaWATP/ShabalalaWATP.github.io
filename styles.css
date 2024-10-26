@@ -1451,49 +1451,67 @@ footer {
 
 /* Responsive Adjustments for Flowers */
 @media (max-width: 768px) {
+    /* Adjust the flower container */
+    .flower-container {
+        min-height: 40vh;
+        margin-top: 20px;
+    }
+
+    /* Scale down the flowers */
+    .flower {
+        transform: scale(0.5);
+        bottom: 0;
+    }
+
     .flower__leaf {
-        width: 6vmin;
-        height: 9vmin;
+        width: 4vmin;
+        height: 6vmin;
     }
 
     .flower__line {
-        height: 45vmin;
+        width: 1vmin;
+        height: 35vmin;
     }
 
     .flower__line__leaf {
-        width: 5vmin;
-        height: calc(5vmin + 2vmin);
+        width: 3vmin;
+        height: calc(3vmin + 1vmin);
     }
 
     .flower__light {
-        width: 0.8vmin;
-        height: 0.8vmin;
+        width: 0.5vmin;
+        height: 0.5vmin;
     }
 
     .flower__g-long {
-        --w: 1.5vmin;
-        --h: 5vmin;
+        --w: 1vmin;
+        --h: 4vmin;
     }
 
     .flower__g-right .leaf,
     .flower__g-fr .leaf {
-        width: 25vmin;
-        height: 40vmin;
+        width: 15vmin;
+        height: 30vmin;
     }
 
     .flower__g-front__leaf {
-        width: 8vmin;
-        height: 8vmin;
+        width: 6vmin;
+        height: 6vmin;
     }
 
     .long-g .leaf {
-        --w: 12vmin;
-        --h: 30vmin;
+        --w: 8vmin;
+        --h: 20vmin;
+    }
+
+    /* Prevent horizontal overflow */
+    body, html {
+        overflow-x: hidden;
     }
 }
 
 /* Additional Styling */
-.flower-container.not-loaded{
+.flower-container.not-loaded {
     opacity: 0;
     transition: opacity 1s ease-in;
 }
@@ -1501,4 +1519,3 @@ footer {
 .flower-container.loaded {
     opacity: 1;
 }
-
