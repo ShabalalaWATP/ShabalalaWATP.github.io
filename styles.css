@@ -1634,3 +1634,13 @@ footer {
 .flower-container.loaded {
     opacity: 1;
 }
+/* Honors Webpage Text Adjustment */
+#honors-webpage {
+    margin-top: 20px; /* Adds space above the text */
+}
+
+@media (max-width: 768px) {
+    #honors-webpage {
+        margin-top: 30px; /* Increased space for mobile view */
+    }
+}
