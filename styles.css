@@ -320,7 +320,7 @@ footer {
     }
 
     .button-container button {
-        width: calc(100% - 20px);
+        width: 100%;
         justify-content: center;
     }
 
