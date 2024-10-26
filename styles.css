@@ -13,7 +13,15 @@
     justify-content: space-between;
 }
 
+/* Hamburger Menu Toggle */
+.nav-menu .menu-toggle {
+    display: none; /* Hidden on larger screens */
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* For potential animations */
+}
 
+/* Navigation Links */
 .nav-menu ul {
     list-style: none;
     display: flex;
@@ -28,35 +36,48 @@
 
 .nav-menu a {
     text-decoration: none;
-    color: #333;
+    color: #333; /* Dark text for contrast */
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .nav-menu a:hover {
-    color: #ff6347;
+    color: #ff6347; /* Tomato color on hover */
     text-decoration: underline;
 }
 
 /* Responsive Navigation Menu */
 @media (max-width: 768px) {
+    /* Display the hamburger menu */
+    .nav-menu .menu-toggle {
+        display: block;
+    }
+
+    /* Stack navigation links vertically and hide them by default */
     .nav-menu ul {
         flex-direction: column;
-        background: rgba(255, 255, 255, 0.95);
+        background: #ffffff; /* Solid white background for mobile menu */
         position: fixed;
         top: 60px; /* Height of the navigation bar */
         left: 0;
         width: 100%;
-        display: none; /* Hidden by default */
+        max-height: 0;
+        opacity: 0;
+        transition: max-height 0.3s ease, opacity 0.3s ease;
+        overflow: hidden;
     }
 
+    /* Show navigation links when active */
     .nav-menu ul.active {
-        display: flex;
+        max-height: 500px; /* Adjust based on number of links */
+        opacity: 1;
     }
 
+    /* Adjust link margins for vertical layout */
     .nav-menu li {
         margin: 10px 0;
     }
+}
 
     /* Add a hamburger menu icon */
     .nav-menu::before {
