@@ -3,56 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#ff7f50">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Honor's Webpage</title>
-    
-    <!-- Include Tailwind CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Include Luxon JS library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
     
     <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
         @keyframes gradient {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
-            font-family: 'Arial', sans-serif;
-        }
-
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
         }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 30px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
         }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 20px 0;
         }
 
         .audio-button {
@@ -62,148 +60,165 @@
             padding: 15px 30px;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
             margin: 10px;
+            font-size: 16px;
         }
 
-        .audio-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 127, 80, 0.3);
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
         }
 
         .gallery-item {
+            width: 100%;
             border-radius: 10px;
             transition: transform 0.3s ease;
-            max-width: 100%;
-            height: auto;
         }
 
         .gallery-item:hover {
             transform: scale(1.05);
         }
+
+        .section-title {
+            color: #333;
+            text-align: center;
+            font-size: 2em;
+            margin: 20px 0;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 315px;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .countdown-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            text-align: center;
+        }
+
+        .countdown-item span {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #ff6347;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header Section -->
-        <header class="glass-card text-center py-10">
-            <h1 class="text-4xl font-bold text-gray-800 mb-4">Honor's Webpage</h1>
-            <p class="text-lg text-gray-600">
+        <header class="glass-card">
+            <h1>Honor's Webpage</h1>
+            <p style="text-align: center;">
                 If ever you are feeling down, you can visit this website to cheer yourself up. 
                 Remember, every part of this page is filled with love, just for you. Love, Alex
             </p>
         </header>
 
-        <!-- Audio Section -->
-        <section id="audio-buttons" class="glass-card">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Music for Honor</h2>
-            <div class="flex justify-center flex-wrap gap-4">
+        <section class="glass-card">
+            <h2 class="section-title">Music for Honor</h2>
+            <div class="button-container">
                 <button onclick="playAudio('audio/Honor 1.mp3', this)" class="audio-button">
-                    <img src="images/audio-icon.png" alt="Play" class="w-6 h-6">
-                    <span>Play Hip-Hop Song</span>
+                    Play Hip-Hop Song
                 </button>
                 <button onclick="playAudio('audio/Honor 3.mp3', this)" class="audio-button">
-                    <img src="images/audio-icon.png" alt="Play" class="w-6 h-6">
-                    <span>Play Pop-Rock Song</span>
+                    Play Pop-Rock Song
                 </button>
             </div>
-            <audio id="audio-player" controls style="display:none;">
+            <audio id="audio-player" style="display:none;">
                 <source id="audio-source" src="" type="audio/mpeg">
-                Your browser does not support the audio element.
             </audio>
         </section>
 
-        <!-- Gallery Section -->
-        <section id="gallery" class="glass-card">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Pictures</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <section class="glass-card">
+            <h2 class="section-title">Pictures</h2>
+            <div class="gallery-grid">
                 <img src="images/hcow.png" alt="Image 1" class="gallery-item">
                 <img src="images/I Love You.jpg" alt="Image 2" class="gallery-item">
                 <img src="images/IMG_1736.PNG" alt="Image 3" class="gallery-item">
                 <img src="images/IMG_1737.PNG" alt="Image 4" class="gallery-item">
                 <img src="images/IMG_1738.PNG" alt="Image 5" class="gallery-item">
             </div>
-        </section><!-- Videos Section -->
-        <section id="videos" class="glass-card">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Videos</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="aspect-w-16 aspect-h-9">
-                    <iframe src="https://www.youtube.com/embed/7ZX4H4WJT-Y?si=yY65TAk6vaZZ2DI5" 
-                            class="w-full h-[315px] rounded-xl" 
-                            allowfullscreen></iframe>
-                </div>
-                <div class="aspect-w-16 aspect-h-9">
-                    <iframe src="https://www.youtube.com/embed/PvZDY_PDw68?si=Xb3P27EfuaWXKgiJ" 
-                            class="w-full h-[315px] rounded-xl" 
-                            allowfullscreen></iframe>
-                </div>
-                <div class="aspect-w-16 aspect-h-9">
-                    <iframe src="https://www.youtube.com/embed/CUQ984A_XyA?si=e76CFJVcSW5dMgOv" 
-                            class="w-full h-[315px] rounded-xl" 
-                            allowfullscreen></iframe>
-                </div>
-            </div>
-            <div class="mt-8 p-6 bg-white/30 backdrop-blur-sm rounded-xl">
-                <p class="text-lg text-gray-700">
-                    To make you feel close to home even when you're far away, I'll be adding a new video every single week just for you. 
-                    Whether it's a funny moment, a sweet message, or a surprise that will make you smile, 
-                    these videos are my way of reminding you that you're always in my thoughts, no matter where you are.
-                </p>
-            </div>
         </section>
 
-        <!-- Time Zones Section -->
         <section class="glass-card">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Current Time</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div class="p-6 bg-white/30 backdrop-blur-sm rounded-xl text-center">
-                    <h3 class="text-xl font-semibold mb-4">United Kingdom</h3>
-                    <p id="uk-time" class="text-lg">Loading...</p>
+            <h2 class="section-title">Videos</h2>
+            <div class="video-grid">
+                <iframe src="https://www.youtube.com/embed/7ZX4H4WJT-Y?si=yY65TAk6vaZZ2DI5" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/PvZDY_PDw68?si=Xb3P27EfuaWXKgiJ" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/CUQ984A_XyA?si=e76CFJVcSW5dMgOv" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="glass-card">
+            <h2 class="section-title">Current Time</h2>
+            <div class="time-grid">
+                <div>
+                    <h3>United Kingdom</h3>
+                    <p id="uk-time">Loading...</p>
                 </div>
-                <div class="p-6 bg-white/30 backdrop-blur-sm rounded-xl text-center">
-                    <h3 class="text-xl font-semibold mb-4">Australia (Sydney)</h3>
-                    <p id="sydney-time" class="text-lg">Loading...</p>
+                <div>
+                    <h3>Australia (Sydney)</h3>
+                    <p id="sydney-time">Loading...</p>
                 </div>
-                <div class="p-6 bg-white/30 backdrop-blur-sm rounded-xl text-center">
-                    <h3 class="text-xl font-semibold mb-4">Australia (Brisbane)</h3>
-                    <p id="brisbane-time" class="text-lg">Loading...</p>
+                <div>
+                    <h3>Australia (Brisbane)</h3>
+                    <p id="brisbane-time">Loading...</p>
                 </div>
             </div>
         </section>
 
-        <!-- Countdown Section -->
-        <section id="countdown" class="glass-card">
-            <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Countdown until Honor's Return</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <section class="glass-card">
+            <h2 class="section-title">Countdown until Honor's Return</h2>
+            <div class="countdown-grid">
                 <div class="countdown-item">
-                    <span id="days" class="text-4xl font-bold text-pink-500">00</span>
-                    <p class="text-lg mt-2">Days</p>
+                    <span id="days">00</span>
+                    <p>Days</p>
                 </div>
                 <div class="countdown-item">
-                    <span id="hours" class="text-4xl font-bold text-pink-500">00</span>
-                    <p class="text-lg mt-2">Hours</p>
+                    <span id="hours">00</span>
+                    <p>Hours</p>
                 </div>
                 <div class="countdown-item">
-                    <span id="minutes" class="text-4xl font-bold text-pink-500">00</span>
-                    <p class="text-lg mt-2">Minutes</p>
+                    <span id="minutes">00</span>
+                    <p>Minutes</p>
                 </div>
                 <div class="countdown-item">
-                    <span id="seconds" class="text-4xl font-bold text-pink-500">00</span>
-                    <p class="text-lg mt-2">Seconds</p>
+                    <span id="seconds">00</span>
+                    <p>Seconds</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <footer class="text-center py-8 text-white">
-        <p class="text-lg">Made with ❤️ by Alex</p>
+    <footer>
+        <p>Made with ❤️ by Alex</p>
     </footer>
 
-    <!-- Include your script file -->
     <script src="script.js"></script>
 </body>
 </html>
-        
