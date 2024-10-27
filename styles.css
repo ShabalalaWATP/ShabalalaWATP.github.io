@@ -2,15 +2,16 @@
 .nav-menu {
     position: fixed;
     top: 0;
+    left: 0;
     width: 100%;
-    background: #ffffff; /* Solid white background */
+    background: #ffffff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     transition: background 0.3s ease;
-    padding: 10px 20px;
+    padding: 10px 0; /* Removed horizontal padding */
     display: flex;
+    justify-content: center; /* Center the content horizontally */
     align-items: center;
-    justify-content: space-between;
 }
 
 /* Hamburger Menu Toggle */
@@ -25,9 +26,10 @@
 .nav-menu ul {
     list-style: none;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Center the list items */
     padding: 10px 0;
     margin: 0;
+    width: 100%; /* Take full width to enable proper centering */
 }
 
 .nav-menu li {
@@ -48,6 +50,11 @@
 
 /* Responsive Navigation Menu */
 @media (max-width: 768px) {
+    .nav-menu {
+        padding: 10px 20px; /* Add some padding on mobile */
+        justify-content: space-between; /* Space between hamburger and content */
+    }
+
     /* Display the hamburger menu */
     .nav-menu .menu-toggle {
         display: block;
@@ -65,16 +72,23 @@
         opacity: 0;
         transition: max-height 0.3s ease, opacity 0.3s ease;
         overflow: hidden;
+        justify-content: flex-start; /* Left align items on mobile */
+        padding: 10px 20px;
     }
 
     /* Show navigation links when active */
     .nav-menu ul.active {
-        max-height: 500px; /* Adjust based on number of links */
+        max-height: 500px;
         opacity: 1;
+        width: 100%;
+        left: 0;
+        text-align: center;
     }
 
-    /* Adjust link margins for vertical layout */
+    /* Center the mobile menu items */
     .nav-menu li {
+        width: 100%;
+        text-align: center;
         margin: 10px 0;
     }
 }
