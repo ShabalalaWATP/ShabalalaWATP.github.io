@@ -93,15 +93,10 @@
     }
 }
 
-/* Add top padding to body content to account for fixed nav */
-body {
-    padding-top: 60px; /* Adjust based on nav-menu height */
-}
-
 /* Base styles */
 body {
     margin: 0;
-    padding: 20px;
+    padding: 80px 20px 20px 20px; /* Increased top padding and kept other padding */
     min-height: 100vh;
     background: linear-gradient(-45deg, #ff7f50, #ff6347, #ff69b4, #9370db);
     background-size: 400% 400%;
@@ -431,16 +426,17 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
-        padding: 10px;
+        padding: 100px 10px 10px 10px; /* Increased top padding for mobile */
     }
 
     header {
-        margin: 10px;
+        margin: 0;
         padding: 20px;
     }
 
     header h1 {
         font-size: 36px;
+        margin-top: 20px;
     }
 
     header p {
