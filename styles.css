@@ -260,7 +260,8 @@ h2 {
 /* Gallery Section */
 .image-gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Creates 3 equal columns */
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 300px; /* Set fixed row height */
     gap: 20px;
     padding: 20px;
     max-width: 1200px;
@@ -269,13 +270,18 @@ h2 {
 
 .gallery-item {
     width: 100%;
-    height: 300px; /* Fixed height for consistency */
+    height: 100%;
     border-radius: 10px;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     opacity: 1;
-    object-fit: cover; /* This ensures images cover the area without distortion */
+    object-fit: cover;
     display: block;
+}
+
+/* Make the bottom images span two columns */
+.gallery-item:nth-last-child(-n+2) {
+    grid-column: span 1.5; /* Make bottom images wider */
 }
 
 .gallery-item:hover {
@@ -286,11 +292,12 @@ h2 {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .image-gallery {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: 1fr;
+        grid-auto-rows: 250px;
     }
     
     .gallery-item {
-        height: 250px; /* Slightly smaller height on mobile */
+        grid-column: span 1 !important; /* Reset column span on mobile */
     }
 }
 
