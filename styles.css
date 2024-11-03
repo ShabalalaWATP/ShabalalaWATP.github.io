@@ -260,8 +260,7 @@ h2 {
 /* Gallery Section */
 .image-gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto; /* Allow two rows of automatic height */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;
     padding: 20px;
     max-width: 1200px;
@@ -270,12 +269,13 @@ h2 {
 
 .gallery-item {
     width: 100%;
-    aspect-ratio: 4/3; /* This maintains a consistent aspect ratio */
+    height: 400px; /* Increased fixed height */
     border-radius: 10px;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     opacity: 1;
-    object-fit: cover;
+    object-fit: contain; /* Changed from cover to contain */
+    background-color: rgba(255, 255, 255, 0.9); /* Match your section background */
     display: block;
 }
 
@@ -291,7 +291,7 @@ h2 {
     }
     
     .gallery-item {
-        aspect-ratio: 3/2; /* Slightly different ratio for mobile */
+        height: 300px; /* Slightly smaller height on mobile */
     }
 }
 
