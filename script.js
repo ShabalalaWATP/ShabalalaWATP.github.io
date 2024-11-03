@@ -120,26 +120,28 @@ function calculateTime() {
     }
 
     try {
-        // Parse the input datetime in the selected timezone
-        const inputDateTime = luxon.DateTime.fromISO(datetimeInput.value).setZone(timezoneSelect.value);
+        // Create DateTime object in the selected timezone
+        const inputDateTime = luxon.DateTime.fromISO(datetimeInput.value, { 
+            zone: timezoneSelect.value 
+        });
 
-        // Define the zones to convert to
+        // Define all zones we want to show
         const zones = [
             { name: 'United Kingdom', zone: 'Europe/London' },
             { name: 'Australia (Sydney)', zone: 'Australia/Sydney' },
             { name: 'Australia (Brisbane)', zone: 'Australia/Brisbane' }
         ];
 
-        // Create the results HTML
+        // Create results HTML
         let html = '<div class="calculation-results">';
         
         zones.forEach(({ name, zone }) => {
-            const converted = inputDateTime.setZone(zone);
+            const convertedTime = inputDateTime.setZone(zone);
             html += `
                 <div class="result-item">
                     <strong>${name}</strong><br>
-                    ${converted.toFormat('cccc, d LLLL yyyy')}<br>
-                    ${converted.toFormat('HH:mm:ss')}
+                    ${convertedTime.toFormat('EEEE, d MMMM yyyy')}<br>
+                    ${convertedTime.toFormat('HH:mm:ss')}
                 </div>
             `;
         });
@@ -153,23 +155,19 @@ function calculateTime() {
     }
 }
 
-// Add event listeners for the calculator
+// Initialize the calculator with current date/time
 document.addEventListener('DOMContentLoaded', () => {
-    const calculateButton = document.querySelector('#time-zone-calculator button');
-    if (calculateButton) {
-        calculateButton.addEventListener('click', calculateTime);
-    }
-
     const datetimeInput = document.getElementById('datetime-input');
     if (datetimeInput) {
         // Set default value to current date and time
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const hours = String(now.getHours()).padStart(2, '0');
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        datetimeInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+        const now = luxon.DateTime.local();
+        datetimeInput.value = now.toFormat("yyyy-MM-dd'T'HH:mm");
+    }
+
+    // Add event listener for the calculate button
+    const calculateButton = document.querySelector('#time-zone-calculator button');
+    if (calculateButton) {
+        calculateButton.addEventListener('click', calculateTime);
     }
 });
 
