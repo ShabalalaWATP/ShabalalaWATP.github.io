@@ -258,6 +258,7 @@ h2 {
 }
 
 /* Gallery Section */
+/* Gallery Section Base Styles */
 .image-gallery {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -269,13 +270,13 @@ h2 {
 
 .gallery-item {
     width: 100%;
-    height: 400px; /* Increased fixed height */
+    height: 400px;
     border-radius: 10px;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     opacity: 1;
-    object-fit: contain; /* Changed from cover to contain */
-    background-color: rgba(255, 255, 255, 0.9); /* Match your section background */
+    object-fit: contain;
+    background-color: rgba(255, 255, 255, 0.9);
     display: block;
 }
 
@@ -284,14 +285,42 @@ h2 {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive adjustments */
+/* Mobile Responsive Adjustments */
 @media (max-width: 768px) {
     .image-gallery {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr; /* Show one image per row */
+        gap: 30px; /* Increase gap between images */
+        padding: 15px; /* Slightly reduce padding */
     }
     
     .gallery-item {
-        height: 300px; /* Slightly smaller height on mobile */
+        height: 300px; /* Reduce height for mobile */
+        width: 100%; /* Ensure full width */
+        margin: 0 auto; /* Center the image */
+        max-width: 400px; /* Maximum width for better display */
+    }
+
+    /* Add padding to section for better spacing */
+    #gallery {
+        padding: 10px;
+    }
+    
+    /* Adjust gallery section header for mobile */
+    #gallery h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+}
+
+/* For extra small devices */
+@media (max-width: 480px) {
+    .image-gallery {
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .gallery-item {
+        height: 250px; /* Further reduce height for smaller screens */
     }
 }
 
