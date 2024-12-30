@@ -1723,7 +1723,7 @@ footer {
 }
 /* THEME SWITCH */
 .theme-switch {
-    margin-left: 1rem;  /* Or wherever you want spacing */
+    margin-right: 20px;
     position: relative;
     display: inline-block;
     width: 50px;
