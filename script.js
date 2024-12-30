@@ -1,4 +1,4 @@
-// Smooth fade-in effect on page load
+// 1) SMOOTH FADE-IN ON PAGE LOAD
 window.addEventListener('load', () => {
     // Remove 'not-loaded' class from flower-container to start flower fade-in
     const flowerContainer = document.querySelector('.flower-container');
@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
         }, 1000); // Adjust the delay as needed
     }
 
-    // Initialize other functionalities
+    // Initialize countdown and clocks
     updateCountdown();
     updateClocks();
 
@@ -17,7 +17,7 @@ window.addEventListener('load', () => {
     generateFloatingHearts();
 });
 
-// Audio player functionality
+// 2) AUDIO PLAYER FUNCTIONALITY
 let currentlyPlaying = null;
 
 function playAudio(audioFile, button) {
@@ -56,15 +56,19 @@ function playAudio(audioFile, button) {
     }
 }
 
-// Countdown Timer
+// 3) COUNTDOWN TIMER
 function updateCountdown() {
+    // Using 07:15 UTC on Jan 2, 2025
     const returnDate = new Date("2025-01-02T07:15:00Z").getTime();
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
 
     if (timeLeft < 0) {
         clearInterval(countdownTimer);
-        document.getElementById("countdown").innerHTML = "<h2 style='color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);'>Honor has returned!</h2>";
+        document.getElementById("countdown").innerHTML = `
+            <h2 style='color: white; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);'>
+                Honor has returned!
+            </h2>`;
         return;
     }
 
@@ -79,10 +83,10 @@ function updateCountdown() {
     document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
 }
 
-// Initialize countdown
+// Initialize countdown (runs every second)
 const countdownTimer = setInterval(updateCountdown, 1000);
 
-// Time Zones Update
+// 4) CLOCKS UPDATE
 function updateClocks() {
     const timeZones = [
         { elementId: 'uk-time', zone: 'Europe/London' },
@@ -105,10 +109,10 @@ function updateClocks() {
     });
 }
 
-// Initialize clocks
+// Update clocks every second
 setInterval(updateClocks, 1000);
 
-// Time Zone Calculator
+// 5) TIME ZONE CALCULATOR
 function calculateTime() {
     const timezoneSelect = document.getElementById('timezone-select');
     const datetimeInput = document.getElementById('datetime-input');
@@ -125,16 +129,15 @@ function calculateTime() {
             zone: timezoneSelect.value 
         });
 
-        // Define all zones we want to show
+        // Define all zones to show
         const zones = [
             { name: 'United Kingdom', zone: 'Europe/London' },
             { name: 'Australia (Sydney)', zone: 'Australia/Sydney' },
             { name: 'Australia (Brisbane)', zone: 'Australia/Brisbane' }
         ];
 
-        // Create results HTML
+        // Build results HTML
         let html = '<div class="calculation-results">';
-        
         zones.forEach(({ name, zone }) => {
             const convertedTime = inputDateTime.setZone(zone);
             html += `
@@ -145,7 +148,6 @@ function calculateTime() {
                 </div>
             `;
         });
-
         html += '</div>';
         resultElement.innerHTML = html;
 
@@ -155,29 +157,89 @@ function calculateTime() {
     }
 }
 
-// Initialize the calculator with current date/time
+// 6) EXTRA FEATURES & LISTENERS
 document.addEventListener('DOMContentLoaded', () => {
+    // A) Time Zone Calculator default
     const datetimeInput = document.getElementById('datetime-input');
     if (datetimeInput) {
         // Set default value to current date and time
         const now = luxon.DateTime.local();
         datetimeInput.value = now.toFormat("yyyy-MM-dd'T'HH:mm");
     }
-
-    // Add event listener for the calculate button
+    // B) Calculate button
     const calculateButton = document.querySelector('#time-zone-calculator button');
     if (calculateButton) {
         calculateButton.addEventListener('click', calculateTime);
     }
+
+    // C) Responsive Navigation Toggle (Hamburger Menu)
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelector('.nav-menu ul');
+    const menuToggle = document.querySelector('.nav-menu .menu-toggle');
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.textContent = navLinks.classList.contains('active') ? '✖' : '☰';
+        });
+    }
+    // Close nav on link click (mobile)
+    document.querySelectorAll('.nav-menu a').forEach(anchor => {
+        anchor.addEventListener('click', function() {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuToggle.textContent = '☰';
+            }
+        });
+    });
+
+    // D) Back to Top Button
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        // Show/hide button on scroll
+        window.addEventListener('scroll', () => {
+            if (document.documentElement.scrollTop > 300) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        // Scroll to top on click
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // E) Dark/Light Mode Toggle with localStorage
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        // Check stored preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+        
+        // Toggle theme on checkbox change
+        themeToggle.addEventListener('change', () => {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
 });
 
-// Function to generate floating hearts
+// 7) FLOATING HEARTS
 function generateFloatingHearts() {
     const floatingHeartsContainer = document.querySelector('.floating-hearts');
     if (!floatingHeartsContainer) return;
 
-    const numberOfHearts = 20; // Adjust the number of hearts as desired
-
+    const numberOfHearts = 20; // Adjust number as desired
     for (let i = 0; i < numberOfHearts; i++) {
         const heart = document.createElement('div');
         heart.classList.add('floating-heart');
@@ -189,13 +251,13 @@ function generateFloatingHearts() {
     }
 }
 
-// Error handling for audio loading
+// 8) AUDIO ERROR HANDLING
 document.getElementById('audio-player').addEventListener('error', (e) => {
     console.error('Error loading audio:', e);
     alert('Error loading audio file. Please try again.');
 });
 
-// Smooth Scrolling for Navigation Links
+// 9) SMOOTH SCROLLING FOR NAVIGATION LINKS
 document.querySelectorAll('.nav-menu a').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
@@ -203,37 +265,10 @@ document.querySelectorAll('.nav-menu a').forEach(anchor => {
         const targetSection = document.getElementById(targetID);
         if (targetSection) {
             window.scrollTo({
-                top: targetSection.offsetTop - 60, // Adjust for fixed nav height
+                top: targetSection.offsetTop - 60, // Adjust if needed for fixed nav
                 behavior: 'smooth'
             });
         }
     });
 });
 
-// Responsive Navigation Toggle (Hamburger Menu)
-document.addEventListener('DOMContentLoaded', () => {
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelector('.nav-menu ul');
-    const menuToggle = document.querySelector('.nav-menu .menu-toggle'); // Select existing menu-toggle
-
-    if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            if (navLinks.classList.contains('active')) {
-                menuToggle.textContent = '✖'; // Change to close icon
-            } else {
-                menuToggle.textContent = '☰'; // Change back to hamburger icon
-            }
-        });
-    }
-
-    // Ensure the menu closes when a link is clicked (on mobile)
-    document.querySelectorAll('.nav-menu a').forEach(anchor => {
-        anchor.addEventListener('click', function() {
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-                menuToggle.textContent = '☰';
-            }
-        });
-    });
-});
