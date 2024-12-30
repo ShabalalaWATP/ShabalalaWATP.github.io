@@ -1700,3 +1700,141 @@ footer {
         margin-top: 30px; /* Increased space for mobile view */
     }
 }
+/* BACK TO TOP BUTTON */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    display: none; /* Hidden by default; shown via JS on scroll */
+    width: 40px;
+    height: 40px;
+    background: #ff6347;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 999;
+    transition: opacity 0.3s ease;
+}
+
+#back-to-top:hover {
+    opacity: 0.8;
+}
+/* THEME SWITCH */
+.theme-switch {
+    margin-left: 1rem;  /* Or wherever you want spacing */
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+/* Hide the default checkbox */
+.theme-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Slider background */
+.theme-switch .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+/* Slider circle */
+.theme-switch .slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+/* Toggle the circle if checked */
+.theme-switch input:checked + .slider {
+    background-color: #ff6347;
+}
+.theme-switch input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* DARK MODE OVERRIDES */
+body.dark-mode {
+    background: #121212; /* or any darker color you prefer */
+    color: #f2f2f2;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Example overrides for dark mode */
+body.dark-mode header h1,
+body.dark-mode header p {
+    color: #f2f2f2 !important;
+    text-shadow: none; /* remove bright text shadow in dark mode */
+}
+
+body.dark-mode .nav-menu {
+    background: #333;
+}
+
+body.dark-mode .nav-menu a {
+    color: #fff;
+}
+body.dark-mode .nav-menu a:hover {
+    color: #ff6347;
+}
+
+/* Dim sections, containers, etc. */
+body.dark-mode section,
+body.dark-mode div#clocks,
+body.dark-mode div#time-zone-calculator,
+body.dark-mode div#countdown,
+body.dark-mode .calculator-input,
+body.dark-mode .calculator-output,
+body.dark-mode .gallery-item,
+body.dark-mode .clock-item {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f2f2f2;
+    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode h2,
+body.dark-mode .signature,
+body.dark-mode p {
+    color: #f2f2f2;
+}
+
+body.dark-mode .video-message {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .gallery-item {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode #back-to-top {
+    background: #ff6347;
+    color: #fff;
+}
+
+body.dark-mode .countdown-item {
+    background: rgba(255, 255, 255, 0.15);
+}
+body,
+section,
+.gallery-item,
+.clock-item,
+.calculator-input,
+.calculator-output,
+.countdown-item {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
