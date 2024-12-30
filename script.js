@@ -58,7 +58,7 @@ function playAudio(audioFile, button) {
 
 // Countdown Timer
 function updateCountdown() {
-    const returnDate = new Date("2025-01-02T00:00:00").getTime();
+    const returnDate = new Date("2025-01-02T07:15:00Z").getTime();
     const now = new Date().getTime();
     const timeLeft = returnDate - now;
 
