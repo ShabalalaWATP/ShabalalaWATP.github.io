@@ -1706,13 +1706,13 @@ footer {
     bottom: 30px;
     right: 30px;
     display: none; /* Hidden by default; shown via JS on scroll */
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background: #ff6347;
     color: #fff;
     border: none;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 16px;
     cursor: pointer;
     z-index: 999;
     transition: opacity 0.3s ease;
